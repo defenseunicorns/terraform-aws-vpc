@@ -1,0 +1,52 @@
+name: test-component
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+    branches:
+      - main
+    paths:
+      - "**.tf"
+      - "**.go"
+      - ".github/**"
+
+permissions:
+  id-token: write
+  contents: read
+
+defaults:
+  run:
+    # We need -e -o pipefail for consistency with GitHub Actions' default behavior
+    shell: bash -e -o pipefail {0}
+
+jobs:
+  # Run the tests
+  run-test:
+    name: Test Component
+    runs-on: ubuntu-latest
+    # Only run when the pull request is not in draft status
+    if: github.event.pull_request.draft == false
+    steps:
+
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Initialize Pipeline
+        uses: ./.github/actions/init-pipeline
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Run live infra tests
+        run: |
+          make test

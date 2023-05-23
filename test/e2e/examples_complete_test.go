@@ -1,11 +1,9 @@
 package e2e_test
 
 import (
-	"testing"
-	"time"
-
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	teststructure "github.com/gruntwork-io/terratest/modules/test-structure"
+	"testing"
 )
 
 func TestExamplesComplete(t *testing.T) {
@@ -14,14 +12,14 @@ func TestExamplesComplete(t *testing.T) {
 	terraformOptions := &terraform.Options{
 		TerraformDir: tempFolder,
 		Upgrade:      false,
-		VarFiles: []string{
-			"fixtures.common.tfvars",
+		Vars: map[string]interface{}{
+			"name_prefix": "ci-",
+			"region":      "us-east-1",
+			"tags": map[string]string{
+				"ManagedBy": "Terraform",
+				"Repo":      "https://github.com/defenseunicorns/terraform-aws-uds-vpc",
+			},
 		},
-		RetryableTerraformErrors: map[string]string{
-			".*empty output.*": "bug in aws_s3_bucket_logging, intermittent error",
-		},
-		MaxRetries:         5,
-		TimeBetweenRetries: 5 * time.Second,
 	}
 
 	// Defer the teardown
