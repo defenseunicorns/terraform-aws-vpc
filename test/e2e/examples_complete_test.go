@@ -13,7 +13,7 @@ func TestExamplesComplete(t *testing.T) {
 		TerraformDir: tempFolder,
 		Upgrade:      false,
 		Vars: map[string]interface{}{
-			"name_prefix": "ci-",
+			"name_prefix": "ci",
 			"region":      "us-east-1",
 			"tags": map[string]string{
 				"ManagedBy": "Terraform",
