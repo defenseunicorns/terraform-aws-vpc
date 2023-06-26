@@ -1,5 +1,6 @@
 data "aws_iam_policy_document" "ecr" {
   # checkov:skip=CKV_AWS_283: This policy allows EKS to access the regional ecr via a private VPC endpoint.
+  # checkov:skip=CKV_AWS_111: Cannot constrain down resources without knowing specific ECR Repo information.
   statement {
     effect = "Allow"
 
