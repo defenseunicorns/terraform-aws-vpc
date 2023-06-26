@@ -9,7 +9,8 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:GetDownloadUrlForLayer",
       "ecr:BatchGetImage",
       "ecr:DescribeImages",
-      "ecr:ListImages"
+      "ecr:ListImages",
+      "ecr:PutImage"
     ]
 
     principals {
