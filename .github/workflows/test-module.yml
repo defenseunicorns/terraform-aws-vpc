@@ -39,7 +39,7 @@ jobs:
           role-duration-seconds: 21600
 
       - name: Run Shared Test workfow
-        uses: defenseunicorns/uds-common-workflows/.github/actions/terraform-test@52-terratest-adjustable-timeout
+        uses: defenseunicorns/uds-common-workflows/.github/actions/terraform-test@main
         with:
           test_retry: 1
           test_timeout: 2h
