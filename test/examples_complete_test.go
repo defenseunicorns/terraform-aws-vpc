@@ -8,7 +8,7 @@ import (
 
 func TestExamplesComplete(t *testing.T) {
 	t.Parallel()
-	tempFolder := teststructure.CopyTerraformFolderToTemp(t, "../..", "examples/complete")
+	tempFolder := teststructure.CopyTerraformFolderToTemp(t, "..", "examples/complete")
 	terraformOptions := &terraform.Options{
 		TerraformDir: tempFolder,
 		Upgrade:      false,
