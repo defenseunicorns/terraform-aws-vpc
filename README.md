@@ -161,7 +161,7 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.6.1 |
 
 ## Modules
 
@@ -291,3 +291,4 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 | <a name="output_vpc_main_route_table_id"></a> [vpc\_main\_route\_table\_id](#output\_vpc\_main\_route\_table\_id) | The ID of the main route table associated with this VPC |
 | <a name="output_vpc_owner_id"></a> [vpc\_owner\_id](#output\_vpc\_owner\_id) | The ID of the AWS account that owns the VPC |
 | <a name="output_vpc_secondary_cidr_blocks"></a> [vpc\_secondary\_cidr\_blocks](#output\_vpc\_secondary\_cidr\_blocks) | List of secondary CIDR blocks of the VPC |
+<!-- END_TF_DOCS -->
