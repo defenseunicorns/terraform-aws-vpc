@@ -1,0 +1,444 @@
+component-definition:
+  uuid: 45e7c9e9-9eee-41a1-8fc3-41d10dd4375a
+  metadata:
+    title: Terraform VPC Module
+    last-modified: "2023-07-05T14:59:16Z"
+    version: "20230705"
+    oscal-version: 1.0.0
+    parties:
+      - uuid: f3cf70f8-ba44-4e55-9ea3-389ef24847d3
+        type: organization
+        name: Defense Unicorns
+        links:
+          - href: https://defenseunicorns.com
+            rel: website
+  components:
+    - uuid: 3b4dc548-edaa-4f46-b6ee-d51f2a330260
+      type: software
+      title: Terraform AWS VPC UDS
+      description: |
+        Deployment of AWS VPC using Terraform
+      purpose: Provides secure VPC infrastructure
+      responsible-roles:
+        - role-id: provider
+          party-uuids:
+            - f3cf70f8-ba44-4e55-9ea3-389ef24847d3
+      control-implementations:
+        - uuid: 0d013cec-c0f4-4d4f-994f-24ccb5a47eb2
+          source: https://raw.githubusercontent.com/usnistgov/oscal-content/master/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json
+          description: NIST 800-53 Controls implemented.
+          implemented-requirements:
+            - uuid: f5396b5e-0ab3-449d-8f6e-e1f00b3d8786
+              control-id: ac-4
+              description: >-
+                # Control Summary
+                Enforce approved authorizations for controlling the flow of information within the
+                system and between connected systems based on [Assignment: organization-defined
+                information flow control policies].
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 8b9b584f-2f43-4840-9f8b-ec504d8b2aab
+              control-id: ac-4.1
+              description: >-
+                # Control Summary
+                Use [Assignment: organization-defined security and privacy attributes] associated with
+                [Assignment: organization-defined information, source, and destination objects] to enforce
+                [Assignment: organization-defined information flow control policies] as a basis for flow
+                control decisions.
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 5277a195-9948-4e85-a815-0b029afc0a22
+              control-id: au-2
+              description: >-
+                # Control Summary
+                a. Identify the types of events that the system is capable of logging in support of the audit
+                function: [Assignment: organization-defined event types that the system is capable of
+                logging];
+                b. Coordinate the event logging function with other organizational entities requiring auditrelated information to guide and inform the selection criteria for events to be logged;
+                c. Specify the following event types for logging within the system: [Assignment: organizationdefined event types (subset of the event types defined in AU-2a.) along with the frequency of
+                (or situation requiring) logging for each identified event type];
+                d. Provide a rationale for why the event types selected for logging are deemed to be adequate
+                to support after-the-fact investigations of incidents; and
+                e. Review and update the event types selected for logging [Assignment: organization-defined
+                frequency].
+
+                # Control Implementation
+                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs. 
+                https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: e2ec2363-8870-46ef-b327-63f28bb84910
+              control-id: au.3
+              description: >-
+                # Control Summary
+                a. What type of event occurred;
+                b. When the event occurred;
+                c. Where the event occurred;
+                d. Source of the event;
+                e. Outcome of the event; and
+                f. Identity of any individuals, subjects, or objects/entities associated with the event.
+
+                # Control Implementation
+                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs. 
+                https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 862dfecf-599b-41ac-87b3-f2d4cea74a57
+              control-id: au-3.1
+              description: >-
+                # Control Summary
+                Generate audit records containing the following additional information: [Assignment:
+                organization-defined additional information].
+
+                # Control Implementation
+                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs. 
+                https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: b9d64ad5-ef78-4ca5-b49c-ffa857d1db26
+              control-id: au-8
+              description: >-
+                # Control Summary
+                a. Use internal system clocks to generate time stamps for audit records; and
+                b. Record time stamps for audit records that meet [Assignment: organization-defined
+                granularity of time measurement] and that use Coordinated Universal Time, have a fixed
+                local time offset from Coordinated Universal Time, or that include the local time offset as
+                part of the time stamp.
+
+                # Control Implementation
+                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs. Flow logs contain timestamps.
+                https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: af04c618-c229-4b83-9296-2e96d59afcbf
+              control-id: au-12
+              description: >-
+                # Control Summary
+                a. Provide audit record generation capability for the event types the system is capable of
+                auditing as defined in AU-2a on [Assignment: organization-defined system components];
+                b. Allow [Assignment: organization-defined personnel or roles] to select the event types that
+                are to be logged by specific components of the system; and
+                c. Generate audit records for 
+
+                # Control Implementation
+                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs.
+                https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: e9657496-df46-48f8-a991-edac4a125ad4
+              control-id: au-12.1
+              description: >-
+                # Control Summary
+                Compile audit records from [Assignment: organization-defined system components] into a
+                system-wide (logical or physical) audit trail that is time-correlated to within [Assignment:
+                organization-defined level of toleranc
+
+                # Control Implementation
+                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs.
+                https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 6b25401a-0ee8-4a92-b83d-d08500686b5f
+              control-id: ca-9
+              description: >-
+                # Control Summary
+                a. Authorize internal connections of [Assignment: organization-defined system components or
+                classes of components] to the system;
+                b. Document, for each internal connection, the interface characteristics, security and privacy
+                requirements, and the nature of the information communicated;
+                c. Terminate internal system connections after [Assignment: organization-defined conditions];
+                and
+                d. Review [Assignment: organization-defined frequency] the continued need for each internal
+                connection.
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 523a5d14-c46a-4106-8846-fda8c4d2f311
+              control-id: cm-2
+              description: >-
+                # Control Summary
+                a. Develop, document, and maintain under configuration control, a current baseline
+                configuration of the system; and
+                b. Review and update the baseline configuration of the system:
+                1. [Assignment: organization-defined frequency];
+                2. When required due to [Assignment: organization-defined circumstances]; and
+                3. When system components are installed or upgraded.
+
+                # Control Implementation
+                Terraform is used to create the baseline configuration and stores the configuration in a state file. https://developer.hashicorp.com/terraform/language/state
+            - uuid: 3991f6f3-814c-4ddf-b18f-6632fd2584d6
+              control-id: cm-2.2
+              description: >-
+                # Control Summary
+                Maintain the currency, completeness, accuracy, and availability of the baseline
+                configuration of the system using [Assignment: organization-defined automated
+                mechanisms].
+
+                # Control Implementation
+                Terraform is used to create the baseline configuration and stores the configuration in a state file. https://developer.hashicorp.com/terraform/language/state
+            - uuid: 27e07c5b-ff8a-4240-b716-e4cbbc4433db
+              control-id: cm-2.3
+              description: >-
+                # Control Summary
+                Retain [Assignment: organization-defined number] of previous versions of baseline
+                configurations of the system to support rollback.
+
+                # Control Implementation
+                S3 versioning is enabled on the S3 Bucket where Teraform state is stored. This provides versionsing for rollbacks
+                by restoring the previous versions of the state file. https://developer.hashicorp.com/terraform/language/state
+                https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html
+            - uuid: ae99373c-01ec-437c-b040-f4ec6e888060
+              control-id: mp-5
+              description: >-
+                # Control Summary
+                a. Protect and control [Assignment: organization-defined types of system media] during
+                transport outside of controlled areas using [Assignment: organization-defined controls];
+                b. Maintain accountability for system media during transport outside of controlled areas;
+                c. Document activities associated with the transport of system media; and
+                d. Restrict the activities associated with the transport of system media to authorized
+                personnel.
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                TLS 1.2 encryption is enabled within the VPC for communication.
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 7c9e507f-6155-4eb0-a1b1-cbf6002906a3
+            - uuid: 3293c1b4-9201-485c-8f7a-f33b8ec69a8d
+              control-id: sa-10
+              description: >-
+                # Control Summary
+                Require the developer of the system, system component, or system service to:
+                a. Perform configuration management during system, component, or service [Selection (one or
+                more): design; development; implementation; operation; disposal];
+                b. Document, manage, and control the integrity of changes to [Assignment: organizationdefined configuration items under configuration management];
+                c. Implement only organization-approved changes to the system, component, or service;
+                d. Document approved changes to the system, component, or service and the potential
+                security and privacy impacts of such changes; and
+                e. Track security flaws and flaw resolution within the system, component, or service and report
+                findings to [Assignment: organization-defined personnel].
+
+                # Control Implementation
+                Terraform is used to create the baseline configuration and stores the configuration in a state file. https://developer.hashicorp.com/terraform/language/state
+            - uuid: 3e1cdfe6-f495-49f1-a011-6a8b4156d67f
+              control-id: sc-7
+              description: >-
+                # Control Summary
+                a. Monitor and control communications at the external managed interfaces to the system and
+                at key internal managed interfaces within the system;
+                b. Implement subnetworks for publicly accessible system components that are [Selection:
+                physically; logically] separated from internal organizational networks; and
+                c. Connect to external networks or systems only through managed interfaces consisting of
+                boundary protection devices arranged in accordance with an organizational security and
+                privacy architecture.
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 07808059-211a-4e2d-ade3-51c2b8d2ddf8
+              control-id: sc-7.3
+              description: >-
+                # Control Summary
+                Limit the number of external network connections to the system.
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 0517c9cc-95db-424a-8183-524770d37306
+              control-id: sc-7.4
+              description: >-
+                # Control Summary
+                (a) Implement a managed interface for each external telecommunication service;
+                (b) Establish a traffic flow policy for each managed interface;
+                (c) Protect the confidentiality and integrity of the information being transmitted across
+                each interface;
+                (d) Document each exception to the traffic flow policy with a supporting mission or
+                business need and duration of that need;
+                (e) Review exceptions to the traffic flow policy [Assignment: organization-defined
+                frequency] and remove exceptions that are no longer supported by an explicit mission
+                or business need;
+                (f) Prevent unauthorized exchange of control plane traffic with external networks;
+                (g) Publish information to enable remote networks to detect unauthorized control plane
+                traffic from internal networks; and
+                (h) Filter unauthorized control plane traffic from external networks.
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: c8489c26-1005-4a5a-8048-3048db99650f
+              control-id: sc-7.5
+              description: >-
+                # Control Summary
+                Deny network communications traffic by default and allow network communications
+                traffic by exception [Selection (one or more): at managed interfaces; for [Assignment:
+                organization-defined systems]].
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 1793fe40-7b94-47fe-9feb-a4a1f502d848
+              control-id: sc-7.12
+              description: >-
+                # Control Summary
+                Implement [Assignment: organization-defined host-based boundary protection
+                mechanisms] at [Assignment: organization-defined system components].
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: cfd8bfdc-8b55-4ac5-b838-dbdcf2a7d921
+              control-id: sc-7.22
+              description: >-
+                # Control Summary
+                Implement separate network addresses to connect to systems in different security
+                domains
+
+                # Control Implementation
+                The VPC is broken down into subnets. https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 4ad07b90-f4d4-4144-bdc4-26039bb10905
+              control-id: sc-7.25
+              description: >-
+                # Control Summary
+                Prohibit the direct connection of [Assignment: organization-defined unclassified national
+                security system] to an external network without the use of [Assignment: organizationdefined boundary protection device].
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 463deb80-c1ae-458d-8432-860ecc3a025e
+              control-id: sc-7.26
+              description: >-
+                # Control Summary
+                Prohibit the direct connection of a classified national security system to an external
+                network without the use of [Assignment: organization-defined boundary protection
+                device].
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 32c401c7-03cd-4eac-8d46-d5cf436cf82e
+              control-id: sc-7.27
+              description: >-
+                # Control Summary
+                Prohibit the direct connection of [Assignment: organization-defined unclassified nonnational security system] to an external network without the use of [Assignment:
+                organization-defined boundary protection device].
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: d9345f6f-a417-49c0-924e-749eb4de9c3f
+              control-id: sc-8
+              description: >-
+                # Control Summary
+                Protect the [Selection (one or more): confidentiality; integrity] of transmitted
+                information
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                TLS 1.2 encryption is enabled within the VPC for communication.
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 1e237a86-e75b-4aed-9aac-0756c65860fd
+              control-id: sc-8.1
+              description: >-
+                # Control Summary
+                Implement cryptographic mechanisms to [Selection (one or more): prevent unauthorized
+                disclosure of information; detect changes to information] during transmission
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                TLS 1.2 encryption is enabled within the VPC for communication.
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+            - uuid: 56919e10-fa34-4518-999d-08b0d007e194
+              control-id: sc-8.2
+              description: >-
+                # Control Summary
+                Maintain the [Selection (one or more): confidentiality; integrity] of information during
+                preparation for transmission and during reception.
+
+                # Control Implementation
+                Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
+
+                TLS 1.2 encryption is enabled within the VPC for communication.
+
+                See IaC module vpc
+                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+  back-matter:
+    resources:
+      - uuid: 6b71a6a3-2bb9-4729-af76-a5a55dabda49
+        title: Terraform AWS VPC
+        rlinks:
+          - href: https://github.com/defenseunicorns/terraform-aws-uds-vpc
