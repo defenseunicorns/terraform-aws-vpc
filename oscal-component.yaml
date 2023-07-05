@@ -380,7 +380,7 @@ component-definition:
                 # Control Summary
                 Prohibit the direct connection of [Assignment: organization-defined unclassified nonnational security system] to an external network without the use of [Assignment:
                 organization-defined boundary protection device].
-                
+
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
                 Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
@@ -394,7 +394,7 @@ component-definition:
                 # Control Summary
                 Protect the [Selection (one or more): confidentiality; integrity] of transmitted
                 information
-                
+
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
                 Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
@@ -410,7 +410,7 @@ component-definition:
                 # Control Summary
                 Implement cryptographic mechanisms to [Selection (one or more): prevent unauthorized
                 disclosure of information; detect changes to information] during transmission
-                
+
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
                 Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
@@ -426,7 +426,7 @@ component-definition:
                 # Control Summary
                 Maintain the [Selection (one or more): confidentiality; integrity] of information during
                 preparation for transmission and during reception.
-                
+
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
                 Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
