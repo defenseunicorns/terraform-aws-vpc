@@ -438,7 +438,7 @@ component-definition:
                 https://github.com/defenseunicorns/terraform-aws-uds-vpc
   back-matter:
     resources:
-      - uuid: 73fb0dce-2a98-453f-b50d-c96241960670
+      - uuid: 6b71a6a3-2bb9-4729-af76-a5a55dabda49
         title: Terraform AWS VPC
         rlinks:
           - href: https://github.com/defenseunicorns/terraform-aws-uds-vpc
