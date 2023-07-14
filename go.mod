@@ -2,7 +2,7 @@ module e2e_test
 
 go 1.20
 
-require github.com/gruntwork-io/terratest v0.43.6
+require github.com/gruntwork-io/terratest v0.43.8
 
 require (
 	cloud.google.com/go v0.107.0 // indirect
