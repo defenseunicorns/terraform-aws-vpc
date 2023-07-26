@@ -11,7 +11,8 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:BatchGetImage",
       "ecr:DescribeImages",
       "ecr:ListImages",
-      "ecr:PutImage"
+      "ecr:PutImage",
+      "ecr:CreateRepository"
     ]
 
     principals {
