@@ -20,7 +20,7 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.9.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.12.0 |
 
 ## Modules
 
