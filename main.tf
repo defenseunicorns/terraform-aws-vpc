@@ -12,7 +12,10 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:DescribeImages",
       "ecr:ListImages",
       "ecr:PutImage",
-      "ecr:CreateRepository"
+      "ecr:CreateRepository",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload"
     ]
 
     principals {
@@ -189,8 +192,8 @@ module "vpc_endpoints" {
       service             = "ecr.api"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      policy              = data.aws_iam_policy_document.ecr.json
       security_group_ids  = [aws_security_group.vpc_tls.id]
+      policy              = data.aws_iam_policy_document.ecr.json
     },
     ecr_dkr = {
       service             = "ecr.dkr"
