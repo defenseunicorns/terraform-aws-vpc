@@ -23,22 +23,18 @@ jobs:
         application_id:  ${{ secrets.NARWHAL_BOT_APP_ID }}
         application_private_key:  ${{ secrets.NARWHAL_BOT_SECRET }}
 
-  debug:
-    needs: get-app-token
-    runs-on: ubuntu-latest
-    steps:
-    - uses: hmarr/debug-action@v2
-
-  echo:
-    needs: get-app-token
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ needs.get-app-token.outputs.token }}
-
   pre-commit:
-    needs: get-app-token
-    uses: defenseunicorns/delivery-github-actions-workflows/.github/workflows/pre-commit.yml@ci/app_token_wip
-    secrets:
-      token: ${{ needs.get-app-token.outputs.token }}
-    with:
-      check-types: '["common", "terraform", "golang"]'
+    runs-on: ubuntu-latest
+    steps:
+      - id: get-token
+        uses: peter-murray/workflow-application-token-action@v2
+        with:
+          application_id:  ${{ secrets.NARWHAL_BOT_APP_ID }}
+          application_private_key:  ${{ secrets.NARWHAL_BOT_SECRET }}
+      - name: run-pre-commit
+        id: run-pre-commit
+        uses: defenseunicorns/delivery-github-actions-workflows/.github/workflows/pre-commit.yml@ci/app_token_wip
+        env:
+          GITHUB_TOKEN: ${{ steps.get-token.outputs.token }}
+        with:
+          check-types: '["common", "terraform", "golang"]'
