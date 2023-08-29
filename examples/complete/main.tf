@@ -5,7 +5,16 @@ resource "random_id" "default" {
 locals {
   # Add randomness to names to avoid collisions when multiple users are using this example
   vpc_name = "${var.name_prefix}-${lower(random_id.default.hex)}"
+  tags = merge(
+    var.tags,
+    {
+      RootTFModule = replace(basename(path.cwd), "_", "-") # tag names based on the directory name
+      ManagedBy    = "Terraform"
+      Repo         = "https://github.com/defenseunicorns/terraform-aws-uds-vpc"
+    }
+  )
 }
+
 
 module "vpc" {
   source = "../.."

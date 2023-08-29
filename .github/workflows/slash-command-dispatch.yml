@@ -1,0 +1,44 @@
+name: Slash Command Dispatch
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: hmarr/debug-action@v2
+
+  get-workflow-token:
+    uses: defenseunicorns/delivery-github-actions-workflows/.github/workflows/get-workflow-token.yml@main
+    secrets:
+      APPLICATION_ID: ${{ secrets.NARWHAL_BOT_APP_ID }}
+      APPLICATION_PRIVATE_KEY: ${{ secrets.NARWHAL_BOT_SECRET }}
+
+  slashCommandDispatchTest:
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/test')
+    runs-on:  ubuntu-latest
+    steps:
+      - name: Slash Command Dispatch
+        uses: peter-evans/slash-command-dispatch@v3
+        with:
+          token: ${{ needs.get-workflow-token.outputs.token }}
+          reaction-token: ${{ needs.get-workflow-token.outputs.token }}
+          commands: test
+          permission: write
+          issue-type: pull-request
+
+  slashCommandDispatchUpdate:
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/update')
+    runs-on:  ubuntu-latest
+    steps:
+      - name: Slash Command Dispatch
+        uses: peter-evans/slash-command-dispatch@v3
+        with:
+          token: ${{ needs.get-workflow-token.outputs.token }}
+          reaction-token: ${{ needs.get-workflow-token.outputs.token }}
+          commands: update
+          permission: write
+          issue-type: pull-request

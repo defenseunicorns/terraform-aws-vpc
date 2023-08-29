@@ -5,6 +5,7 @@ variable "name_prefix" {
     condition     = length(var.name_prefix) <= 20
     error_message = "The name prefix cannot be more than 20 characters"
   }
+  default = "ci"
 }
 
 variable "region" {
