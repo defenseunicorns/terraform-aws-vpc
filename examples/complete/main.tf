@@ -47,5 +47,5 @@ module "vpc" {
   create_database_subnet_group      = true
   instance_tenancy                  = "default"
   vpc_flow_log_permissions_boundary = var.iam_role_permissions_boundary
-  tags                              = var.tags
+  tags                              = local.tags
 }
