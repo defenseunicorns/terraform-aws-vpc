@@ -24,6 +24,7 @@ jobs:
     - uses: hmarr/debug-action@v2
 
   pre-commit:
+    needs: get-workflow-access-token
     uses: defenseunicorns/delivery-github-actions-workflows/.github/workflows/pre-commit.yml@main
     secrets:
       token: ${{ needs.get-workflow-access-token.outputs.token }}
