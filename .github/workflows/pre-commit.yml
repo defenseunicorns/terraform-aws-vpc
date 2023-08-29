@@ -11,30 +11,10 @@ permissions:
 
 jobs:
 
-  get-app-token:
-    runs-on: ubuntu-latest
-    outputs:
-      token: ${{ steps.get-workflow-token.outputs.token }}
-    steps:
-    - name: Get Token
-      id: get-workflow-token
-      uses: peter-murray/workflow-application-token-action@v2
-      with:
-        application_id:  ${{ secrets.NARWHAL_BOT_APP_ID }}
-        application_private_key:  ${{ secrets.NARWHAL_BOT_SECRET }}
-
   pre-commit:
-    runs-on: ubuntu-latest
-    steps:
-      - id: get-token
-        uses: peter-murray/workflow-application-token-action@v2
-        with:
-          application_id:  ${{ secrets.NARWHAL_BOT_APP_ID }}
-          application_private_key:  ${{ secrets.NARWHAL_BOT_SECRET }}
-      - name: run-pre-commit
-        id: run-pre-commit
-        uses: defenseunicorns/delivery-github-actions-workflows/.github/workflows/pre-commit.yml@ci/app_token_wip
-        env:
-          GITHUB_TOKEN: ${{ steps.get-token.outputs.token }}
-        with:
-          check-types: '["common", "terraform", "golang"]'
+    uses: defenseunicorns/delivery-github-actions-workflows/.github/workflows/pre-commit.yml@ci/app_token_wip
+    secrets:
+      APPLICATION_ID: ${{ secrets.NARWHAL_BOT_APP_ID }}
+      APPLICATION_PRIVATE_KEY: ${{ secrets.NARWHAL_BOT_SECRET }}
+    with:
+      check-types: '["common", "terraform", "golang"]'
