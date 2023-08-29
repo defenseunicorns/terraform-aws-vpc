@@ -38,7 +38,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -54,7 +54,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -75,7 +75,7 @@ component-definition:
                 frequency].
 
                 # Control Implementation
-                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs. 
+                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs.
                 https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
 
                 See IaC module vpc
@@ -92,7 +92,7 @@ component-definition:
                 f. Identity of any individuals, subjects, or objects/entities associated with the event.
 
                 # Control Implementation
-                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs. 
+                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs.
                 https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
 
                 See IaC module vpc
@@ -105,7 +105,7 @@ component-definition:
                 organization-defined additional information].
 
                 # Control Implementation
-                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs. 
+                VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs.
                 https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
 
                 See IaC module vpc
@@ -134,7 +134,7 @@ component-definition:
                 auditing as defined in AU-2a on [Assignment: organization-defined system components];
                 b. Allow [Assignment: organization-defined personnel or roles] to select the event types that
                 are to be logged by specific components of the system; and
-                c. Generate audit records for 
+                c. Generate audit records for
 
                 # Control Implementation
                 VPC Flow Logs are enabled utilizing AWS Cloudwatch Logs.
@@ -171,7 +171,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -223,7 +223,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 TLS 1.2 encryption is enabled within the VPC for communication.
@@ -261,7 +261,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -274,7 +274,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -299,7 +299,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -314,7 +314,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -328,7 +328,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -354,7 +354,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -369,7 +369,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -383,7 +383,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
@@ -397,7 +397,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 TLS 1.2 encryption is enabled within the VPC for communication.
@@ -413,7 +413,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 TLS 1.2 encryption is enabled within the VPC for communication.
@@ -429,7 +429,7 @@ component-definition:
 
                 # Control Implementation
                 Access flow in the VPC is controlled by AWS Security Groups (act like firewalls) and Network Access
-                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html 
+                Control Lists (NACLS). https://docs.aws.amazon.com/vpc/latest/userguide/security-groups.html
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 TLS 1.2 encryption is enabled within the VPC for communication.

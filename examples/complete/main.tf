@@ -17,6 +17,7 @@ locals {
 
 
 module "vpc" {
+  #checkov:skip=CKV_TF_1: using ref to a specific version
   source = "../.."
 
   name                  = local.vpc_name

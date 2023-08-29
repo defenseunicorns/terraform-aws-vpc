@@ -1,6 +1,7 @@
 package e2e_test
 
 import (
+	"log"
 	"os"
 	"testing"
 	"time"
@@ -9,11 +10,12 @@ import (
 	teststructure "github.com/gruntwork-io/terratest/modules/test-structure"
 )
 
-// Helper function to set default environment variable if it's not already set
+// Helper function to set default environment variable if it's not already set.
 func setDefaultEnvVar(key, defaultValue string) {
-	_, exists := os.LookupEnv(key)
-	if !exists {
-		os.Setenv(key, defaultValue)
+	if _, exists := os.LookupEnv(key); !exists {
+		if err := os.Setenv(key, defaultValue); err != nil {
+			log.Printf("Error setting environment variable %s: %v", key, err)
+		}
 	}
 }
 

@@ -45,6 +45,3 @@ Example that uses the module with many of its configurations. Used in CI E2E tes
 
 No outputs.
 <!-- END_TF_DOCS -->
-
-
-
