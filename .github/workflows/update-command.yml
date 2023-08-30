@@ -13,14 +13,10 @@ defaults:
     shell: bash -e -o pipefail {0}
 
 jobs:
-
-  get-workflow-token:
-    uses: defenseunicorns/delivery-github-actions-workflows/.github/workflows/get-workflow-token.yml@main
+  update:
+    uses: defenseunicorns/delivery-github-actions-workflows/.github/workflows/update.yml@ci/app_token_wip
     secrets:
       APPLICATION_ID: ${{ secrets.NARWHAL_BOT_APP_ID }}
       APPLICATION_PRIVATE_KEY: ${{ secrets.NARWHAL_BOT_SECRET }}
-
-  update:
-    uses: defenseunicorns/delivery-github-actions-workflows/.github/workflows/update.yml@main
-    secrets:
-      token: ${{ needs.get-workflow-token.outputs.token }}
+      AWS_COMMERCIAL_ROLE_TO_ASSUME: ${{ secrets.AWS_COMMERCIAL_ROLE_TO_ASSUME }}
+      AWS_GOVCLOUD_ROLE_TO_ASSUME: ${{ secrets.AWS_GOVCLOUD_ROLE_TO_ASSUME }}
