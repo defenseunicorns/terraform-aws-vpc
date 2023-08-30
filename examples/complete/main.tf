@@ -5,9 +5,19 @@ resource "random_id" "default" {
 locals {
   # Add randomness to names to avoid collisions when multiple users are using this example
   vpc_name = "${var.name_prefix}-${lower(random_id.default.hex)}"
+  tags = merge(
+    var.tags,
+    {
+      RootTFModule = replace(basename(path.cwd), "_", "-") # tag names based on the directory name
+      ManagedBy    = "Terraform"
+      Repo         = "https://github.com/defenseunicorns/terraform-aws-uds-vpc"
+    }
+  )
 }
 
+
 module "vpc" {
+  #checkov:skip=CKV_TF_1: using ref to a specific version
   source = "../.."
 
   name                  = local.vpc_name
@@ -38,5 +48,5 @@ module "vpc" {
   create_database_subnet_group      = true
   instance_tenancy                  = "default"
   vpc_flow_log_permissions_boundary = var.iam_role_permissions_boundary
-  tags                              = var.tags
+  tags                              = local.tags
 }

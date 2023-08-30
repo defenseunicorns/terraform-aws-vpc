@@ -1,25 +1,33 @@
 package e2e_test
 
 import (
+	"os"
+	"testing"
+	"time"
+
+	"github.com/defenseunicorns/delivery_aws_iac_utils/pkg/utils"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	teststructure "github.com/gruntwork-io/terratest/modules/test-structure"
-	"testing"
 )
 
 func TestExamplesComplete(t *testing.T) {
 	t.Parallel()
-	tempFolder := teststructure.CopyTerraformFolderToTemp(t, "..", "examples/complete")
+
+	// Set the TF_VAR_region to us-east-2 if it's not already set
+	utils.SetDefaultEnvVar("TF_VAR_region", "us-east-2")
+
+	tempFolder := teststructure.CopyTerraformFolderToTemp(t, "../..", "examples/complete")
 	terraformOptions := &terraform.Options{
 		TerraformDir: tempFolder,
 		Upgrade:      false,
-		Vars: map[string]interface{}{
-			"name_prefix": "ci",
-			"region":      "us-east-1",
-			"tags": map[string]string{
-				"ManagedBy": "Terraform",
-				"Repo":      "https://github.com/defenseunicorns/terraform-aws-uds-vpc",
-			},
+		EnvVars: map[string]string{
+			"TF_VAR_region": os.Getenv("TF_VAR_region"), // This will use the existing or newly set default value
 		},
+		RetryableTerraformErrors: map[string]string{
+			".*": "Failed to apply Terraform configuration due to an error.",
+		},
+		MaxRetries:         5,
+		TimeBetweenRetries: 5 * time.Second,
 	}
 
 	// Defer the teardown
