@@ -1,29 +1,20 @@
 package e2e_test
 
 import (
-	"log"
 	"os"
 	"testing"
 	"time"
 
+	"github.com/defenseunicorns/delivery_aws_iac_utils/pkg/utils"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	teststructure "github.com/gruntwork-io/terratest/modules/test-structure"
 )
-
-// Helper function to set default environment variable if it's not already set.
-func setDefaultEnvVar(key, defaultValue string) {
-	if _, exists := os.LookupEnv(key); !exists {
-		if err := os.Setenv(key, defaultValue); err != nil {
-			log.Printf("Error setting environment variable %s: %v", key, err)
-		}
-	}
-}
 
 func TestExamplesComplete(t *testing.T) {
 	t.Parallel()
 
 	// Set the TF_VAR_region to us-east-2 if it's not already set
-	setDefaultEnvVar("TF_VAR_region", "us-east-2")
+	utils.SetDefaultEnvVar("TF_VAR_region", "us-east-2")
 
 	tempFolder := teststructure.CopyTerraformFolderToTemp(t, "../..", "examples/complete")
 	terraformOptions := &terraform.Options{
