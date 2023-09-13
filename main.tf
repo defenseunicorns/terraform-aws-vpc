@@ -161,11 +161,11 @@ module "vpc_endpoints" {
       subnet_ids          = module.vpc.private_subnets
       security_group_ids  = [aws_security_group.vpc_tls.id]
     },
-    #     lambda = {
-    #       service             = "lambda"
-    #       private_dns_enabled = true
-    #       subnet_ids          = module.vpc.private_subnets
-    #     },
+    lambda = {
+      service             = "lambda"
+      private_dns_enabled = true
+      subnet_ids          = module.vpc.private_subnets
+    },
     sts = {
       service             = "sts"
       private_dns_enabled = true
@@ -228,6 +228,12 @@ module "vpc_endpoints" {
       subnet_ids          = module.vpc.private_subnets
       security_group_ids  = [aws_security_group.vpc_tls.id]
       route_table_ids     = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
+    },
+    secretsmanager = {
+      service             = "secretsmanager"
+      private_dns_enabled = true
+      subnet_ids          = module.vpc.private_subnets
+      security_group_ids  = [aws_security_group.vpc_tls.id]
     }
     #     codedeploy = {
     #       service             = "codedeploy"
