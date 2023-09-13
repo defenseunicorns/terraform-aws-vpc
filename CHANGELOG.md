@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.0.5 (2023-09-13)
+
+## What's Changed
+* ci: fix renovate workflow and AWS creds by @zack-is-cool in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/53
+* fix: lambda vpc endpoint sg by @ntwkninja in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/55
+
+
+**Full Changelog**: https://github.com/defenseunicorns/terraform-aws-uds-vpc/compare/v0.0.4...v0.0.5
+
 ## 0.0.4 (2023-09-13)
 
 ## What's Changed
