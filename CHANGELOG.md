@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.0.4 (2023-09-13)
+
+## What's Changed
+* Ecr endpoint updates by @JaseKoonce in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/41
+* update codeowners by @zack-is-cool in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/45
+* adding to ecr.dkr/api policy by @JaseKoonce in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/44
+* chore(deps): update all dependencies by @renovate in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/42
+* fix ci by @zack-is-cool in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/49
+* fix: add lambda & secrets manager vpc endpoints by @ntwkninja in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/52
+* chore(deps): update all dependencies by @renovate in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/51
+
+## New Contributors
+* @JaseKoonce made their first contribution in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/41
+* @zack-is-cool made their first contribution in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/45
+* @ntwkninja made their first contribution in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/52
+
+**Full Changelog**: https://github.com/defenseunicorns/terraform-aws-uds-vpc/compare/v0.0.3...v0.0.4
+
 ## 0.0.3 (2023-07-20)
 
 ## What's Changed

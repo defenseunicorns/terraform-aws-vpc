@@ -61,7 +61,7 @@ locals {
 
 module "vpc" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v5.1.1"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v5.1.2"
 
   name                  = var.name
   cidr                  = var.vpc_cidr
@@ -130,7 +130,7 @@ module "vpc" {
 
 module "vpc_endpoints" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.1.1"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.1.2"
 
   vpc_id             = module.vpc.vpc_id
   security_group_ids = [data.aws_security_group.default.id]
@@ -255,7 +255,7 @@ module "vpc_endpoints" {
 
 module "vpc_endpoints_nocreate" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.1.1"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.1.2"
 
   create = false
 }
