@@ -1,9 +1,11 @@
 module github.com/defenseunicorns/terraform-aws-uds-vpc
 
-go 1.20
+go 1.21.0
+
+toolchain go1.21.1
 
 require (
-	github.com/defenseunicorns/delivery_aws_iac_utils v0.0.0-20230830194203-68c13d5f6b57
+	github.com/defenseunicorns/delivery_aws_iac_utils v0.0.0-20230831144954-60aad36d34b4
 	github.com/gruntwork-io/terratest v0.43.13
 )
 
