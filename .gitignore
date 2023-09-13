@@ -56,3 +56,5 @@ backend.tf
 .external_modules
 
 examples/zarf-complete-example/build
+
+.vscode
