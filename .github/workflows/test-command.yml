@@ -36,6 +36,7 @@ jobs:
           application_private_key: ${{ secrets.NARWHAL_BOT_SECRET }}
 
   e2e-commercial-insecure:
+    needs: parse
     if: needs.parse.outputs.run-e2e-commercial-insecure == 'true'
     runs-on: ubuntu-latest
     steps:
