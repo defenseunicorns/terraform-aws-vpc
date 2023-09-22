@@ -66,16 +66,11 @@ _test-all: _create-folders
 		-e SKIP_TEARDOWN \
 		${TF_VARS} \
 		${BUILD_HARNESS_REPO}:${BUILD_HARNESS_VERSION} \
-		bash -c 'git config --global --add safe.directory /app && asdf install && cd examples/complete && terraform init -upgrade=true && cd ../../test/e2e && go test -count 1 -v $(EXTRA_TEST_ARGS) .'
+		bash -c 'git config --global --add safe.directory /app && cd examples/complete && terraform init -upgrade=true && cd ../../test/e2e && go test -count 1 -v $(EXTRA_TEST_ARGS) .'
 
-.PHONY: test
-test: ## Run all automated tests. Requires access to an AWS account. Costs real money.
-	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 3h"
-
-# Example of how to run a single test only
-#.PHONY: test-complete-foo
-#test-complete-foo: ## Run one test (TestExamplesCompleteFoo). Requires access to an AWS account. Costs real money.
-#	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 2h -run TestExamplesCompleteFoo"
+.PHONY: test-complete-insecure
+test-complete-insecure: ## Run one test (TestExamplesCompleteInsecure). Requires access to an AWS account. Costs real money.
+	$(MAKE) _test-all EXTRA_TEST_ARGS="-timeout 2h -run TestExamplesCompleteInsecure"
 
 .PHONY: docker-save-build-harness
 docker-save-build-harness: _create-folders ## Pulls the build harness docker image and saves it to a tarball
@@ -103,7 +98,7 @@ _runhooks: _create-folders
 		-e "SKIP=$(SKIP)" \
 		-e "PRE_COMMIT_HOME=/app/.cache/pre-commit" \
 		${BUILD_HARNESS_REPO}:${BUILD_HARNESS_VERSION} \
-		bash -c 'git config --global --add safe.directory /app && asdf install && pre-commit run -a --show-diff-on-failure $(HOOK)'
+		bash -c 'git config --global --add safe.directory /app && pre-commit run -a --show-diff-on-failure $(HOOK)'
 
 .PHONY: pre-commit-all
 pre-commit-all: ## Run all pre-commit hooks. Returns nonzero exit code if any hooks fail. Uses Docker for maximum compatibility
