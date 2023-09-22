@@ -32,9 +32,8 @@ jobs:
       - name: Update Comment
         uses: defenseunicorns/delivery-github-actions-workflows/.github/actions/comment@main
         with:
-          application_id: ${{ secrets.APPLICATION_ID }}
-          application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
-          token: ${{ secrets.TOKEN }}
+          application_id: ${{ secrets.NARWHAL_BOT_APP_ID }}
+          application_private_key: ${{ secrets.NARWHAL_BOT_SECRET }}
 
   e2e-commercial-insecure:
     if: needs.parse.outputs.run-e2e-commercial-insecure == 'true'
