@@ -3,7 +3,7 @@
 
 optConfig:
   optIn: true
-action: issue
+action: fix
 enforceBranches:
   - ci/allstart-test
 requireApproval: true
