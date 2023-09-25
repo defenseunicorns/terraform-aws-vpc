@@ -3,9 +3,9 @@
 
 optConfig:
   optIn: true
-action: issue
+action: fix
 enforceBranches:
-  - ci/allstart-test
+  - ci/allstar-test
 requireApproval: true
 requireCodeOwnerReviews: true
 approvalCount: 1
