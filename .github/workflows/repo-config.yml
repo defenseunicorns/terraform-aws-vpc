@@ -4,6 +4,7 @@ on:
   schedule:
     # daily at 11:00 UTC
     - cron: '0 11 * * *'
+  pull_request:
 
 jobs:
   repo-config:
