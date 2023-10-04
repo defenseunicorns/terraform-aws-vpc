@@ -12,6 +12,7 @@ jobs:
       APPLICATION_ID: ${{ secrets.NARWHAL_BOT_APP_ID }}
       APPLICATION_PRIVATE_KEY: ${{ secrets.NARWHAL_BOT_SECRET }}
     with:
+      branch: main
       checks: |-
         checks:
           - context: 'pre-commit / pre-commit-checks (common)'
