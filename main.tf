@@ -134,10 +134,10 @@ locals {
 }
 
 resource "aws_ec2_subnet_cidr_reservation" "this" {
-  count           = length(local.flattened_ips)
-  subnet_id       = local.flattened_subnets[count.index]
-  cidr_block      = format("%s/32", local.flattened_ips[count.index])
-  description     = "Reserved IP block for special use"
+  count            = length(local.flattened_ips)
+  subnet_id        = local.flattened_subnets[count.index]
+  cidr_block       = format("%s/32", local.flattened_ips[count.index])
+  description      = "Reserved IP block for special use"
   reservation_type = "prefix"
 }
 
