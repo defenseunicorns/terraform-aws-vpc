@@ -268,6 +268,8 @@ module "vpc_endpoints" {
   tags = merge(local.tags, {
     Endpoint = "true"
   })
+
+  depends_on = [module.vpc]
 }
 
 module "vpc_endpoints_nocreate" {
