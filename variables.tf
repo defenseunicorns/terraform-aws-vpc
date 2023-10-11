@@ -104,3 +104,9 @@ variable "vpc_flow_log_permissions_boundary" {
   type        = string
   default     = null
 }
+
+variable "ip_offsets_per_subnet" {
+  description = "List of offsets for IP reservations in each subnet."
+  type        = list(list(number))
+  default     = null
+}
