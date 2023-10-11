@@ -125,7 +125,7 @@ module "vpc" {
 }
 
 locals {
-  reserved_ips_per_subnet = [for idx, cidr in module.vpc.private_subnets_cidr_blocks : [for offset in var.ip_offsets_per_subnet[idx] : cidrhost(cidr, offset)]]
+  reserved_ips_per_subnet = var.ip_offsets_per_subnet != null ? [for idx, cidr in module.vpc.private_subnets_cidr_blocks : [for offset in var.ip_offsets_per_subnet[idx] : cidrhost(cidr, offset)]] : []
 
   flat_reserved_details = [for idx, ips in local.reserved_ips_per_subnet : { subnet_id = module.vpc.private_subnets[idx], ips = ips }]
 
