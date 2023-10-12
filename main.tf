@@ -269,7 +269,7 @@ module "vpc_endpoints" {
     Endpoint = "true"
   })
 
-  depends_on = [module.vpc]
+  depends_on = [aws_ec2_subnet_cidr_reservation.this]
 }
 
 module "vpc_endpoints_nocreate" {
