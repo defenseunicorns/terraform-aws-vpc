@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.0 (2023-10-12)
+
+## What's Changed
+* chore: fix broken test and delete .tool-versions file by @RothAndrew in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/59
+* chore: fix broken test (take 2) by @RothAndrew in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/61
+* chore: fix broken test (take 3) by @RothAndrew in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/62
+* chore: change renovate rebaseWhen to "never" by @RothAndrew in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/58
+* chore(deps): update all dependencies by @renovate in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/56
+* ci: init allstar config by @zack-is-cool in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/64
+* allstar-debug by @zack-is-cool in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/65
+* wip by @zack-is-cool in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/66
+* Revert accident by @zack-is-cool in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/67
+* add IP reservations to VPC module by @ntwkninja in https://github.com/defenseunicorns/terraform-aws-uds-vpc/pull/71
+
+
+**Full Changelog**: https://github.com/defenseunicorns/terraform-aws-uds-vpc/compare/v0.0.5...v0.1.0
+
 ## 0.0.5 (2023-09-13)
 
 ## What's Changed
