@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/defenseunicorns/terraform-aws-uds-vpc/compare/v0.1.0...v0.1.1) (2023-10-23)
+
+
+### Miscellaneous Chores
+
+* configure everything better ([#70](https://github.com/defenseunicorns/terraform-aws-uds-vpc/issues/70)) ([9d24a00](https://github.com/defenseunicorns/terraform-aws-uds-vpc/commit/9d24a007aae55c2810602b750a89b56f481516ce))
+
 ## 0.1.0 (2023-10-12)
 
 ## What's Changed
