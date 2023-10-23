@@ -24,3 +24,9 @@ variable "iam_role_permissions_boundary" {
   type        = string
   default     = null
 }
+
+variable "ip_offsets_per_subnet" {
+  description = "List of offsets for IP reservations in each subnet."
+  type        = list(list(number))
+  default     = [[5, 6], [5, 6], [5]] # Default to fifth and sixth IPs for each subnet.
+}

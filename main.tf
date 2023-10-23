@@ -124,6 +124,23 @@ module "vpc" {
   tags = local.tags
 }
 
+locals {
+  reserved_ips_per_subnet = var.ip_offsets_per_subnet != null ? [for idx, cidr in module.vpc.private_subnets_cidr_blocks : [for offset in var.ip_offsets_per_subnet[idx] : cidrhost(cidr, offset)]] : []
+
+  flat_reserved_details = [for idx, ips in local.reserved_ips_per_subnet : { subnet_id = module.vpc.private_subnets[idx], ips = ips }]
+
+  flattened_ips     = flatten([for item in local.flat_reserved_details : item.ips])
+  flattened_subnets = flatten([for item in local.flat_reserved_details : [for ip in item.ips : item.subnet_id]])
+}
+
+resource "aws_ec2_subnet_cidr_reservation" "this" {
+  count            = length(local.flattened_ips)
+  subnet_id        = local.flattened_subnets[count.index]
+  cidr_block       = format("%s/32", local.flattened_ips[count.index])
+  description      = "Reserved IP block for special use"
+  reservation_type = "prefix"
+}
+
 ################################################################################
 # VPC Endpoints Module
 ################################################################################
@@ -251,6 +268,8 @@ module "vpc_endpoints" {
   tags = merge(local.tags, {
     Endpoint = "true"
   })
+
+  depends_on = [aws_ec2_subnet_cidr_reservation.this]
 }
 
 module "vpc_endpoints_nocreate" {
