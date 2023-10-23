@@ -6,7 +6,7 @@
 
 Example that uses the module with many of its configurations. Used in CI E2E tests.
 
-<!-- BEGIN_TF_DOCS -->
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 | Name | Version |
@@ -44,4 +44,4 @@ Example that uses the module with many of its configurations. Used in CI E2E tes
 ## Outputs
 
 No outputs.
-<!-- END_TF_DOCS -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
