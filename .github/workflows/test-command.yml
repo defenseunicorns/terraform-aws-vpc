@@ -1,51 +1,38 @@
-name: test
-on:
-  repository_dispatch:
-    types: [test-command]
+# usage:
+  # A user with write status to the repo can from a PR comment:
 
-permissions:
-  id-token: write
-  contents: read
+  # run a single test
+  # /test make=<make-target> region=<region>
 
-defaults:
-  run:
-    # We need -e -o pipefail for consistency with GitHub Actions' default behavior
-    shell: bash -e -o pipefail {0}
+  # run ping test
+  # /test ping
 
-jobs:
+  # run all tests in the makefile
+  # /test
 
-  # Parse the command, so we can decide which tests to run. Examples: "/test all", "/test validate", "/test e2e"
-  # We can do as many of these as we want to get as granular as we want.
-  parse:
-    runs-on: ubuntu-latest
-    outputs:
-      run-e2e-commercial-insecure: ${{ steps.parse.outputs.run-e2e-commercial-insecure }}
-    steps:
-      - name: Parse Args
-        id: parse
-        uses: defenseunicorns/delivery-github-actions-workflows/.github/actions/parse-test@main
+  name: test
+  on:
+    repository_dispatch:
+      types: [test-command]
 
-  # Update the comment that triggered the /test command to show the run url
-  comment:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Update Comment
-        uses: defenseunicorns/delivery-github-actions-workflows/.github/actions/comment@main
-        with:
-          application_id: ${{ secrets.NARWHAL_BOT_APP_ID }}
-          application_private_key: ${{ secrets.NARWHAL_BOT_SECRET }}
 
-  e2e-commercial-insecure:
-    needs: parse
-    if: needs.parse.outputs.run-e2e-commercial-insecure == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: e2e-commercial-insecure
-        uses: defenseunicorns/delivery-github-actions-workflows/.github/actions/e2e@main
-        with:
-          application_id: ${{ secrets.NARWHAL_BOT_APP_ID }}
-          application_private_key: ${{ secrets.NARWHAL_BOT_SECRET }}
-          region: us-east-2
-          role-to-assume: ${{ secrets.NARWHAL_AWS_COMMERCIAL_ROLE_TO_ASSUME }}
-          github-context: "test / e2e-commercial-insecure"
-          test-to-run: "insecure"
+  permissions:
+    id-token: write
+    contents: read
+
+  defaults:
+    run:
+      # We need -e -o pipefail for consistency with GitHub Actions' default behavior
+      shell: bash -e -o pipefail {0}
+
+  jobs:
+    e2e-test:
+      uses: defenseunicorns/delivery-github-actions-workflows/.github/workflows/e2e-test.yml@main
+      secrets:
+        APPLICATION_ID: ${{ secrets.NARWHAL_BOT_APP_ID }}
+        APPLICATION_PRIVATE_KEY: ${{ secrets.NARWHAL_BOT_SECRET }}
+        AWS_COMMERCIAL_ROLE_TO_ASSUME: ${{ secrets.NARWHAL_AWS_COMMERCIAL_ROLE_TO_ASSUME }}
+        AWS_GOVCLOUD_ROLE_TO_ASSUME: ${{ secrets.NARWHAL_AWS_GOVCLOUD_ROLE_TO_ASSUME }}
+      with:
+        # check if the required slash command args are present, if so populate the json matrix, else pass in null and relevant e2e tests that would require a make target and region will be skipped
+        e2e-test-matrix: ${{ (contains(github.event.client_payload.slash_command_args.named, 'make') && contains(github.event.client_payload.slash_command_args.named, 'region')) && format('[{{"make-target":"{0}", "region":"{1}"}}]', github.event.client_payload.slash_command_args.named.make, github.event.client_payload.slash_command_args.named.region) || null }}

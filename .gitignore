@@ -1,11 +1,12 @@
 .cache/
 .idea/
 .DS_Store
+.vscode
+
 
 # Local .terraform directories
 .terraform/
 *.terraform.*
-
 # .tfstate files
 *.tfstate
 *.tfstate.*
@@ -57,4 +58,6 @@ backend.tf
 
 examples/zarf-complete-example/build
 
-.vscode
+#ignore lamba builds json file created from deploying lambda resource
+
+examples/complete/builds

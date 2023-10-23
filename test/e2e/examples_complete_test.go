@@ -10,7 +10,7 @@ import (
 	teststructure "github.com/gruntwork-io/terratest/modules/test-structure"
 )
 
-func TestExamplesCompleteInsecure(t *testing.T) {
+func TestExamplesCompleteCommon(t *testing.T) {
 	t.Parallel()
 
 	// Set the TF_VAR_region to us-east-2 if it's not already set
