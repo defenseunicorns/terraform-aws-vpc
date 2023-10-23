@@ -20,15 +20,15 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.13.1 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.73 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git | v5.1.1 |
-| <a name="module_vpc_endpoints"></a> [vpc\_endpoints](#module\_vpc\_endpoints) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints | v5.1.1 |
-| <a name="module_vpc_endpoints_nocreate"></a> [vpc\_endpoints\_nocreate](#module\_vpc\_endpoints\_nocreate) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints | v5.1.1 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git | v5.1.2 |
+| <a name="module_vpc_endpoints"></a> [vpc\_endpoints](#module\_vpc\_endpoints) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints | v5.1.2 |
+| <a name="module_vpc_endpoints_nocreate"></a> [vpc\_endpoints\_nocreate](#module\_vpc\_endpoints\_nocreate) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints | v5.1.2 |
 
 ## Resources
 
