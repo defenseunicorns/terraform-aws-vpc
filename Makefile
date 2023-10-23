@@ -2,9 +2,6 @@ include .env
 
 .DEFAULT_GOAL := help
 
-# import any TF_VAR_ environment variables into the docker container.
-TF_VARS := $(shell env | grep '^TF_VAR_' | awk -F= '{printf "-e %s ", $$1}')
-
 # Optionally add the "-it" flag for docker run commands if the env var "CI" is not set (meaning we are on a local machine and not in github actions)
 TTY_ARG :=
 ifndef CI
