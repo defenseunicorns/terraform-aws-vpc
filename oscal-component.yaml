@@ -42,7 +42,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 8b9b584f-2f43-4840-9f8b-ec504d8b2aab
               control-id: ac-4.1
               description: >-
@@ -58,7 +58,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 5277a195-9948-4e85-a815-0b029afc0a22
               control-id: au-2
               description: >-
@@ -79,7 +79,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: e2ec2363-8870-46ef-b327-63f28bb84910
               control-id: au.3
               description: >-
@@ -96,7 +96,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 862dfecf-599b-41ac-87b3-f2d4cea74a57
               control-id: au-3.1
               description: >-
@@ -109,7 +109,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: b9d64ad5-ef78-4ca5-b49c-ffa857d1db26
               control-id: au-8
               description: >-
@@ -125,7 +125,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: af04c618-c229-4b83-9296-2e96d59afcbf
               control-id: au-12
               description: >-
@@ -141,7 +141,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: e9657496-df46-48f8-a991-edac4a125ad4
               control-id: au-12.1
               description: >-
@@ -155,7 +155,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 6b25401a-0ee8-4a92-b83d-d08500686b5f
               control-id: ca-9
               description: >-
@@ -175,7 +175,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 523a5d14-c46a-4106-8846-fda8c4d2f311
               control-id: cm-2
               description: >-
@@ -229,7 +229,7 @@ component-definition:
                 TLS 1.2 encryption is enabled within the VPC for communication.
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 7c9e507f-6155-4eb0-a1b1-cbf6002906a3
             - uuid: 3293c1b4-9201-485c-8f7a-f33b8ec69a8d
               control-id: sa-10
@@ -265,7 +265,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 07808059-211a-4e2d-ade3-51c2b8d2ddf8
               control-id: sc-7.3
               description: >-
@@ -278,7 +278,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 0517c9cc-95db-424a-8183-524770d37306
               control-id: sc-7.4
               description: >-
@@ -303,7 +303,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: c8489c26-1005-4a5a-8048-3048db99650f
               control-id: sc-7.5
               description: >-
@@ -318,7 +318,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 1793fe40-7b94-47fe-9feb-a4a1f502d848
               control-id: sc-7.12
               description: >-
@@ -332,7 +332,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: cfd8bfdc-8b55-4ac5-b838-dbdcf2a7d921
               control-id: sc-7.22
               description: >-
@@ -344,7 +344,7 @@ component-definition:
                 The VPC is broken down into subnets. https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 4ad07b90-f4d4-4144-bdc4-26039bb10905
               control-id: sc-7.25
               description: >-
@@ -358,7 +358,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 463deb80-c1ae-458d-8432-860ecc3a025e
               control-id: sc-7.26
               description: >-
@@ -373,7 +373,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 32c401c7-03cd-4eac-8d46-d5cf436cf82e
               control-id: sc-7.27
               description: >-
@@ -387,7 +387,7 @@ component-definition:
                 https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: d9345f6f-a417-49c0-924e-749eb4de9c3f
               control-id: sc-8
               description: >-
@@ -403,7 +403,7 @@ component-definition:
                 TLS 1.2 encryption is enabled within the VPC for communication.
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 1e237a86-e75b-4aed-9aac-0756c65860fd
               control-id: sc-8.1
               description: >-
@@ -419,7 +419,7 @@ component-definition:
                 TLS 1.2 encryption is enabled within the VPC for communication.
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
             - uuid: 56919e10-fa34-4518-999d-08b0d007e194
               control-id: sc-8.2
               description: >-
@@ -435,10 +435,10 @@ component-definition:
                 TLS 1.2 encryption is enabled within the VPC for communication.
 
                 See IaC module vpc
-                https://github.com/defenseunicorns/terraform-aws-uds-vpc
+                https://github.com/defenseunicorns/terraform-aws-vpc
   back-matter:
     resources:
       - uuid: 6b71a6a3-2bb9-4729-af76-a5a55dabda49
         title: Terraform AWS VPC
         rlinks:
-          - href: https://github.com/defenseunicorns/terraform-aws-uds-vpc
+          - href: https://github.com/defenseunicorns/terraform-aws-vpc
