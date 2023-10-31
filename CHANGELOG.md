@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.3](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.2...v0.1.3) (2023-10-31)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#78](https://github.com/defenseunicorns/terraform-aws-vpc/issues/78)) ([a34de60](https://github.com/defenseunicorns/terraform-aws-vpc/commit/a34de6054a50e8a9cd69590d80d7a0239a930107))
+* remove uds references ([#79](https://github.com/defenseunicorns/terraform-aws-vpc/issues/79)) ([e80de6d](https://github.com/defenseunicorns/terraform-aws-vpc/commit/e80de6d591c900dfa1d1d117f9964a82e1ae51bf))
+
 ## [0.1.2](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.1...v0.1.2) (2023-10-28)
 
 
