@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.3...v0.1.4) (2023-11-09)
+
+
+### Bug Fixes
+
+* add ses vpc endpoint ([#88](https://github.com/defenseunicorns/terraform-aws-vpc/issues/88)) ([48f4526](https://github.com/defenseunicorns/terraform-aws-vpc/commit/48f452648caaf280d7a5951d7379ee82529b678c))
+* **deps:** update all dependencies ([#86](https://github.com/defenseunicorns/terraform-aws-vpc/issues/86)) ([ef7cc7e](https://github.com/defenseunicorns/terraform-aws-vpc/commit/ef7cc7ee9d681cbdd6e9bf31f66e663a329b37bc))
+
 ## [0.1.3](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.2...v0.1.3) (2023-10-31)
 
 
