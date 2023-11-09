@@ -252,6 +252,12 @@ module "vpc_endpoints" {
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
       security_group_ids  = [aws_security_group.vpc_tls.id]
+    },
+    email_smtp = {
+      service             = "email-smtp"
+      private_dns_enabled = true
+      subnet_ids          = module.vpc.private_subnets
+      security_group_ids  = [aws_security_group.vpc_smtp.id]
     }
     #     codedeploy = {
     #       service             = "codedeploy"
@@ -295,7 +301,7 @@ resource "aws_security_group" "vpc_tls" {
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    description = "TLS from VPC"
+    description = "HTTPS from VPC"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -303,9 +309,34 @@ resource "aws_security_group" "vpc_tls" {
   }
 
   egress {
-    description = "TLS from VPC"
+    description = "HTTPS to Managed Services"
     from_port   = 443
     to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = local.tags
+}
+
+resource "aws_security_group" "vpc_smtp" {
+  #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
+  name        = "${var.name}-vpc_smtp"
+  description = "Allow SMTP inbound traffic"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description = "SMTP from VPC"
+    from_port   = 587
+    to_port     = 587
+    protocol    = "tcp"
+    cidr_blocks = (concat([module.vpc.vpc_cidr_block], module.vpc.vpc_secondary_cidr_blocks))
+  }
+
+  egress {
+    description = "SMTP to Managed Services"
+    from_port   = 587
+    to_port     = 587
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
