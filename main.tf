@@ -301,7 +301,7 @@ resource "aws_security_group" "vpc_tls" {
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    description = "TLS from VPC"
+    description = "HTTPS from VPC"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -309,7 +309,7 @@ resource "aws_security_group" "vpc_tls" {
   }
 
   egress {
-    description = "TLS from VPC"
+    description = "HTTPS to Managed Services"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
@@ -334,7 +334,7 @@ resource "aws_security_group" "vpc_smtp" {
   }
 
   egress {
-    description = "SMTP from VPC"
+    description = "SMTP to Managed Services"
     from_port   = 587
     to_port     = 587
     protocol    = "tcp"
