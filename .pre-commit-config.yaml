@@ -16,15 +16,19 @@ repos:
       - id: check-yaml
         args:
           - "--allow-multiple-documents"
-  - repo: https://github.com/sirosen/fix-smartquotes
-    rev: 0.2.0
+  - repo: https://github.com/sirosen/texthooks
+    rev: 0.6.2
     hooks:
       - id: fix-smartquotes
-  - repo: https://github.com/dnephin/pre-commit-golang
-    rev: v0.5.1
+  - repo: https://github.com/tekwizely/pre-commit-golang
+    rev: v1.0.0-rc.1
     hooks:
       - id: go-fmt
       - id: golangci-lint
+        args:
+          - "--timeout=10m"
+          - "--verbose"
+          - "--allow-parallel-runners"
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.83.5
     hooks:
@@ -43,6 +47,6 @@ repos:
         args:
           - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 37.43.0
+    rev: 37.59.7
     hooks:
       - id: renovate-config-validator
