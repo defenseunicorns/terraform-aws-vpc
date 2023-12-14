@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.5](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.4...v0.1.5) (2023-12-14)
+
+
+### Continuous Integration
+
+* update renovate window ([#89](https://github.com/defenseunicorns/terraform-aws-vpc/issues/89)) ([d28fda6](https://github.com/defenseunicorns/terraform-aws-vpc/commit/d28fda67fd1dfbc5efc51c743a7b1a798aaeff33))
+* update renovate window ([#91](https://github.com/defenseunicorns/terraform-aws-vpc/issues/91)) ([5468c1c](https://github.com/defenseunicorns/terraform-aws-vpc/commit/5468c1c33aa479ab2c74f584765bf608556e8d32))
+
 ## [0.1.4](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.3...v0.1.4) (2023-11-09)
 
 
