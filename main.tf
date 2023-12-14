@@ -96,24 +96,6 @@ module "vpc" {
   enable_nat_gateway = var.enable_nat_gateway
   single_nat_gateway = var.single_nat_gateway
 
-  # customer_gateways = {
-  #   IP1 = {
-  #     bgp_asn     = 65112
-  #     ip_address  = "1.2.3.4"
-  #     device_name = "some_name"
-  #   },
-  #   IP2 = {
-  #     bgp_asn    = 65112
-  #     ip_address = "5.6.7.8"
-  #   }
-  # }
-
-  # enable_vpn_gateway = true
-
-  # enable_dhcp_options              = true
-  # dhcp_options_domain_name         = "service.consul"
-  # dhcp_options_domain_name_servers = ["127.0.0.1", "10.10.0.2"]
-
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
   enable_flow_log                      = true
   vpc_flow_log_permissions_boundary    = var.vpc_flow_log_permissions_boundary
@@ -147,6 +129,7 @@ resource "aws_ec2_subnet_cidr_reservation" "this" {
 
 module "vpc_endpoints" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
+  count  = var.create_default_vpc_endpoints ? 1 : 0
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.1.2"
 
   vpc_id             = module.vpc.vpc_id
@@ -163,112 +146,102 @@ module "vpc_endpoints" {
       service            = "dynamodb"
       service_type       = "Gateway"
       route_table_ids    = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
-      security_group_ids = [aws_security_group.vpc_tls.id]
+      security_group_ids = [aws_security_group.vpc_tls[0].id]
       tags               = { Name = "dynamodb-vpc-endpoint" }
     },
     ssm = {
       service             = "ssm"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     ssmmessages = {
       service             = "ssmmessages"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     lambda = {
       service             = "lambda"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     sts = {
       service             = "sts"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     logs = {
       service             = "logs"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     ec2 = {
       service             = "ec2"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     ec2messages = {
       service             = "ec2messages"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     ecr_api = {
       service             = "ecr.api"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
       policy              = data.aws_iam_policy_document.ecr.json
     },
     ecr_dkr = {
       service             = "ecr.dkr"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
       policy              = data.aws_iam_policy_document.ecr.json
     },
     kms = {
       service             = "kms"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     autoscaling = {
       service             = "autoscaling"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     elasticloadbalancing = {
       service             = "elasticloadbalancing"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     efs = {
       service             = "elasticfilesystem"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
       route_table_ids     = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
     },
     secretsmanager = {
       service             = "secretsmanager"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls.id]
+      security_group_ids  = [aws_security_group.vpc_tls[0].id]
     },
     email_smtp = {
       service             = "email-smtp"
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_smtp.id]
+      security_group_ids  = [aws_security_group.vpc_smtp[0].id]
     }
-    #     codedeploy = {
-    #       service             = "codedeploy"
-    #       private_dns_enabled = true
-    #       subnet_ids          = module.vpc.private_subnets
-    #     },
-    #     codedeploy_commands_secure = {
-    #       service             = "codedeploy-commands-secure"
-    #       private_dns_enabled = true
-    #       subnet_ids          = module.vpc.private_subnets
-    #     },
   }
 
   tags = merge(local.tags, {
@@ -276,13 +249,6 @@ module "vpc_endpoints" {
   })
 
   depends_on = [aws_ec2_subnet_cidr_reservation.this]
-}
-
-module "vpc_endpoints_nocreate" {
-  #checkov:skip=CKV_TF_1: using ref to a specific version
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.1.2"
-
-  create = false
 }
 
 ################################################################################
@@ -296,6 +262,8 @@ data "aws_security_group" "default" {
 
 resource "aws_security_group" "vpc_tls" {
   #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
+  count = var.create_default_vpc_endpoints ? 1 : 0
+
   name        = "${var.name}-vpc_tls"
   description = "Allow TLS inbound traffic"
   vpc_id      = module.vpc.vpc_id
@@ -321,6 +289,8 @@ resource "aws_security_group" "vpc_tls" {
 
 resource "aws_security_group" "vpc_smtp" {
   #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
+  count = var.create_default_vpc_endpoints ? 1 : 0
+
   name        = "${var.name}-vpc_smtp"
   description = "Allow SMTP inbound traffic"
   vpc_id      = module.vpc.vpc_id
