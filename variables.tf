@@ -110,3 +110,9 @@ variable "ip_offsets_per_subnet" {
   type        = list(list(number))
   default     = null
 }
+
+variable "create_default_vpc_endpoints" {
+  description = "Creates a default set of VPC endpoints."
+  type        = bool
+  default     = true
+}

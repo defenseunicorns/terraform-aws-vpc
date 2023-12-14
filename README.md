@@ -28,7 +28,6 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 |------|--------|---------|
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git | v5.1.2 |
 | <a name="module_vpc_endpoints"></a> [vpc\_endpoints](#module\_vpc\_endpoints) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints | v5.1.2 |
-| <a name="module_vpc_endpoints_nocreate"></a> [vpc\_endpoints\_nocreate](#module\_vpc\_endpoints\_nocreate) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints | v5.1.2 |
 
 ## Resources
 
@@ -46,6 +45,7 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 |------|-------------|------|---------|:--------:|
 | <a name="input_azs"></a> [azs](#input\_azs) | List of availability zones to deploy into | `list(string)` | n/a | yes |
 | <a name="input_create_database_subnet_group"></a> [create\_database\_subnet\_group](#input\_create\_database\_subnet\_group) | Create database subnet group | `bool` | `true` | no |
+| <a name="input_create_default_vpc_endpoints"></a> [create\_default\_vpc\_endpoints](#input\_create\_default\_vpc\_endpoints) | Creates a default set of VPC endpoints. | `bool` | `true` | no |
 | <a name="input_database_subnets"></a> [database\_subnets](#input\_database\_subnets) | List of database subnets inside the VPC | `list(string)` | `[]` | no |
 | <a name="input_enable_nat_gateway"></a> [enable\_nat\_gateway](#input\_enable\_nat\_gateway) | Enable NAT gateway | `bool` | `false` | no |
 | <a name="input_instance_tenancy"></a> [instance\_tenancy](#input\_instance\_tenancy) | Tenancy of instances launched into the VPC.<br>Valid values are "default" or "dedicated".<br>EKS does not support dedicated tenancy. | `string` | `"default"` | no |
