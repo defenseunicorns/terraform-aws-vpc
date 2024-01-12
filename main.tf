@@ -15,7 +15,11 @@ data "aws_iam_policy_document" "ecr" {
       "ecr:CreateRepository",
       "ecr:InitiateLayerUpload",
       "ecr:UploadLayerPart",
-      "ecr:CompleteLayerUpload"
+      "ecr:CompleteLayerUpload",
+      "ecr:DeleteRepository",
+      "ecr:TagResource",
+      "ecr:describeRepo",
+      "ecr:DescribeRepositories"
     ]
 
     principals {
