@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.1.6](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.5...v0.1.6) (2024-03-08)
+
+
+### Features
+
+* update outputs to match upstream module ([#107](https://github.com/defenseunicorns/terraform-aws-vpc/issues/107)) ([c0f807a](https://github.com/defenseunicorns/terraform-aws-vpc/commit/c0f807a6e477872f84915d9345761d6476d48bf9))
+
+
+### Bug Fixes
+
+* **deps:** update all dependencies ([#101](https://github.com/defenseunicorns/terraform-aws-vpc/issues/101)) ([7f4594a](https://github.com/defenseunicorns/terraform-aws-vpc/commit/7f4594a3ed53edb0c06ba32f0d188f74f5211d14))
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#105](https://github.com/defenseunicorns/terraform-aws-vpc/issues/105)) ([e230462](https://github.com/defenseunicorns/terraform-aws-vpc/commit/e230462ff10934dd6cddd332418e2551ccbf9898))
+* **deps:** update all dependencies ([#108](https://github.com/defenseunicorns/terraform-aws-vpc/issues/108)) ([d83f3b3](https://github.com/defenseunicorns/terraform-aws-vpc/commit/d83f3b327c6701476b3e05fe2757c50b073cb9f3))
+* **deps:** update all dependencies ([#96](https://github.com/defenseunicorns/terraform-aws-vpc/issues/96)) ([c4b710d](https://github.com/defenseunicorns/terraform-aws-vpc/commit/c4b710dc57fdd50db58a964f203bee08e6779395))
+* **deps:** update all dependencies ([#99](https://github.com/defenseunicorns/terraform-aws-vpc/issues/99)) ([7457fec](https://github.com/defenseunicorns/terraform-aws-vpc/commit/7457feca9f41bc78bbe66d6cd9ad7905d3269f48))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.132.1 ([#100](https://github.com/defenseunicorns/terraform-aws-vpc/issues/100)) ([6b2e824](https://github.com/defenseunicorns/terraform-aws-vpc/commit/6b2e824529f367e54abdedb50568ae9391cc2568))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.142.1 ([#102](https://github.com/defenseunicorns/terraform-aws-vpc/issues/102)) ([a5d1c65](https://github.com/defenseunicorns/terraform-aws-vpc/commit/a5d1c659528d205dde03e4618fffef67892deb44))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.154.0 ([#103](https://github.com/defenseunicorns/terraform-aws-vpc/issues/103)) ([0d3c04c](https://github.com/defenseunicorns/terraform-aws-vpc/commit/0d3c04cd70c1749387f1860b4a3c79ac43159c7b))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.156.2 ([#104](https://github.com/defenseunicorns/terraform-aws-vpc/issues/104)) ([d25a128](https://github.com/defenseunicorns/terraform-aws-vpc/commit/d25a128b7b79e1c7f81bef558c83c5247bc73702))
+
+
+### Continuous Integration
+
+* reconfigure renovate window and vulnerabilityAlerts and rebasing due to existing branches not being deleted ([a44fc6d](https://github.com/defenseunicorns/terraform-aws-vpc/commit/a44fc6d41965710ce5e2f499847f9751b2ac1663))
+* renovate window update and vuln handling ([#97](https://github.com/defenseunicorns/terraform-aws-vpc/issues/97)) ([6dcc17c](https://github.com/defenseunicorns/terraform-aws-vpc/commit/6dcc17ca475bce9bce4aeb30c038395d6ccd3083))
+
 ## [0.1.5](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.4...v0.1.5) (2023-12-14)
 
 
