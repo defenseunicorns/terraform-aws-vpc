@@ -26,8 +26,8 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git | v5.5.3 |
-| <a name="module_vpc_endpoints"></a> [vpc\_endpoints](#module\_vpc\_endpoints) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints | v5.5.3 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git | v5.6.0 |
+| <a name="module_vpc_endpoints"></a> [vpc\_endpoints](#module\_vpc\_endpoints) | git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints | v5.6.0 |
 
 ## Resources
 
