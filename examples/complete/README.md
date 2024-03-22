@@ -19,12 +19,14 @@ Example that uses the module with many of its configurations. Used in CI E2E tes
 
 | Name | Version |
 |------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.62.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | >= 3.1.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_subnet_addrs"></a> [subnet\_addrs](#module\_subnet\_addrs) | git::https://github.com/hashicorp/terraform-cidr-subnets | v1.0.0 |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | ../.. | n/a |
 
 ## Resources
@@ -32,6 +34,7 @@ Example that uses the module with many of its configurations. Used in CI E2E tes
 | Name | Type |
 |------|------|
 | [random_id.default](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [aws_availability_zones.available](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) | data source |
 
 ## Inputs
 
