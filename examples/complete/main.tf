@@ -2,6 +2,13 @@ resource "random_id" "default" {
   byte_length = 2
 }
 
+data "aws_availability_zones" "available" {
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
+}
+
 locals {
   # Add randomness to names to avoid collisions when multiple users are using this example
   vpc_name = "${var.name_prefix}-${lower(random_id.default.hex)}"
@@ -13,8 +20,71 @@ locals {
       Repo         = "https://github.com/defenseunicorns/terraform-aws-vpc"
     }
   )
+
 }
 
+
+module "subnet_addrs" {
+  source = "git::https://github.com/hashicorp/terraform-cidr-subnets?ref=v1.0.0"
+
+  base_cidr_block = "10.200.0.0/16"
+
+  # new_bits is added to the cidr of vpc_cidr to chunk the subnets up
+  # public-a - 10.200.0.0/22 - 1,022 hosts
+  # public-b - 10.200.4.0/22 - 1,022 hosts
+  # public-c - 10.200.8.0/22 - 1,022 hosts
+  # private-a - 10.200.12.0/22 - 1,022 hosts
+  # private-b - 10.200.16.0/22 - 1,022 hosts
+  # private-c - 10.200.20.0/22 - 1,022 hosts
+  # database-a - 10.200.24.0/27 - 30 hosts
+  # database-b - 10.200.24.32/27 - 30 hosts
+  # database-c - 10.200.24.64/27 - 30 hosts
+  networks = [
+    {
+      name     = "public-a"
+      new_bits = 6
+    },
+    {
+      name     = "public-b"
+      new_bits = 6
+    },
+    {
+      name     = "public-c"
+      new_bits = 6
+    },
+    {
+      name     = "private-a"
+      new_bits = 6
+    },
+    {
+      name     = "private-b"
+      new_bits = 6
+    },
+    {
+      name     = "private-c"
+      new_bits = 6
+    },
+    {
+      name     = "database-a"
+      new_bits = 11
+    },
+    {
+      name     = "database-b"
+      new_bits = 11
+    },
+    {
+      name     = "database-c"
+      new_bits = 11
+    },
+  ]
+}
+
+locals {
+  azs              = [for az_name in slice(data.aws_availability_zones.available.names, 0, min(length(data.aws_availability_zones.available.names), 3)) : az_name]
+  public_subnets   = [for k, v in module.subnet_addrs.network_cidr_blocks : v if strcontains(k, "public")]
+  private_subnets  = [for k, v in module.subnet_addrs.network_cidr_blocks : v if strcontains(k, "private")]
+  database_subnets = [for k, v in module.subnet_addrs.network_cidr_blocks : v if strcontains(k, "database")]
+}
 
 module "vpc" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
@@ -23,10 +93,10 @@ module "vpc" {
   name                  = local.vpc_name
   vpc_cidr              = "10.200.0.0/16"
   secondary_cidr_blocks = ["100.64.0.0/16"] # Used for optimizing IP address usage by pods in an EKS cluster. See https://aws.amazon.com/blogs/containers/optimize-ip-addresses-usage-by-pods-in-your-amazon-eks-cluster/
-  azs                   = ["${var.region}a", "${var.region}b", "${var.region}c"]
-  public_subnets        = [for k, v in module.vpc.azs : cidrsubnet(module.vpc.vpc_cidr_block, 5, k)]
-  private_subnets       = [for k, v in module.vpc.azs : cidrsubnet(module.vpc.vpc_cidr_block, 5, k + 4)]
-  database_subnets      = [for k, v in module.vpc.azs : cidrsubnet(module.vpc.vpc_cidr_block, 5, k + 8)]
+  azs                   = local.azs
+  public_subnets        = local.public_subnets
+  private_subnets       = local.private_subnets
+  database_subnets      = local.database_subnets
   intra_subnets         = [for k, v in module.vpc.azs : cidrsubnet(element(module.vpc.vpc_secondary_cidr_blocks, 0), 5, k)]
   ip_offsets_per_subnet = var.ip_offsets_per_subnet # List of offsets for IP reservations in each subnet.
   single_nat_gateway    = true
