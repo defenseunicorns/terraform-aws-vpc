@@ -120,5 +120,5 @@ variable "create_default_vpc_endpoints" {
 variable "enable_fips_vpce" {
   description = "Enable FIPS endpoints for VPC endpoints."
   type        = bool
-  default     = true
+  default     = false
 }
