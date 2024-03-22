@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.7](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.6...v0.1.7) (2024-03-22)
+
+
+### Features
+
+* add logic for vpce url overrides and fips endpoints ([#113](https://github.com/defenseunicorns/terraform-aws-vpc/issues/113)) ([37ff967](https://github.com/defenseunicorns/terraform-aws-vpc/commit/37ff9670001cba765ea613640f9d5ead2970afb1))
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#111](https://github.com/defenseunicorns/terraform-aws-vpc/issues/111)) ([275dbe2](https://github.com/defenseunicorns/terraform-aws-vpc/commit/275dbe2d84b3b89ed1281c859808d1a7e910687a))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.235.4 ([#109](https://github.com/defenseunicorns/terraform-aws-vpc/issues/109)) ([4e28b51](https://github.com/defenseunicorns/terraform-aws-vpc/commit/4e28b5107948498fdf529ed91d4e70ceff499a3a))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.252.1 ([#112](https://github.com/defenseunicorns/terraform-aws-vpc/issues/112)) ([f21519a](https://github.com/defenseunicorns/terraform-aws-vpc/commit/f21519a579225c4f7a6e0efc05cf2cf96f0a8b89))
+
 ## [0.1.6](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.5...v0.1.6) (2024-03-08)
 
 
