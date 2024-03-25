@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.8](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.7...v0.1.8) (2024-03-25)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#116](https://github.com/defenseunicorns/terraform-aws-vpc/issues/116)) ([1f649bd](https://github.com/defenseunicorns/terraform-aws-vpc/commit/1f649bdf9d7275de92694809f20e6ab0ea1a17d3))
+* Update example subnet logic patterns ([#114](https://github.com/defenseunicorns/terraform-aws-vpc/issues/114)) ([7cadb33](https://github.com/defenseunicorns/terraform-aws-vpc/commit/7cadb33e6bc501a881330ed2e3169a3030983ba8))
+
 ## [0.1.7](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.6...v0.1.7) (2024-03-22)
 
 
