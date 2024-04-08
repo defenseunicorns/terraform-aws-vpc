@@ -67,7 +67,7 @@ locals {
 
 module "vpc" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v5.7.0"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v5.7.1"
 
   name                  = var.name
   cidr                  = var.vpc_cidr
@@ -136,7 +136,7 @@ resource "aws_ec2_subnet_cidr_reservation" "this" {
 module "vpc_endpoints" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
   count  = var.create_default_vpc_endpoints ? 1 : 0
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.7.0"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.7.1"
 
   vpc_id             = module.vpc.vpc_id
   security_group_ids = [data.aws_security_group.default.id]
