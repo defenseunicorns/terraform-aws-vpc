@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.8](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.7...v0.1.8) (2024-04-22)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#116](https://github.com/defenseunicorns/terraform-aws-vpc/issues/116)) ([1f649bd](https://github.com/defenseunicorns/terraform-aws-vpc/commit/1f649bdf9d7275de92694809f20e6ab0ea1a17d3))
+* **deps:** update all dependencies ([#117](https://github.com/defenseunicorns/terraform-aws-vpc/issues/117)) ([fc8e180](https://github.com/defenseunicorns/terraform-aws-vpc/commit/fc8e18041bbe4893a5eb1511ba9bc8b928a1539d))
+* **deps:** update all dependencies ([#118](https://github.com/defenseunicorns/terraform-aws-vpc/issues/118)) ([8a5fd74](https://github.com/defenseunicorns/terraform-aws-vpc/commit/8a5fd7429c9e2fccbee6be5546128cacb124a739))
+* **deps:** update all dependencies ([#121](https://github.com/defenseunicorns/terraform-aws-vpc/issues/121)) ([36406ae](https://github.com/defenseunicorns/terraform-aws-vpc/commit/36406ae58085b44c5391d97da07d5f2cfde7194a))
+* **deps:** update module golang.org/x/net to v0.23.0 [security] ([#119](https://github.com/defenseunicorns/terraform-aws-vpc/issues/119)) ([2156839](https://github.com/defenseunicorns/terraform-aws-vpc/commit/2156839508452a5e80ef55d6698466f7e2375471))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.286.0 ([#120](https://github.com/defenseunicorns/terraform-aws-vpc/issues/120)) ([fcff5df](https://github.com/defenseunicorns/terraform-aws-vpc/commit/fcff5df8dabef13c352ebe66af17fc029649e707))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.316.2 ([#122](https://github.com/defenseunicorns/terraform-aws-vpc/issues/122)) ([ff6f719](https://github.com/defenseunicorns/terraform-aws-vpc/commit/ff6f71915e0cc35b8d9dff9c0bd273eeca0e0a2e))
+* Update example subnet logic patterns ([#114](https://github.com/defenseunicorns/terraform-aws-vpc/issues/114)) ([7cadb33](https://github.com/defenseunicorns/terraform-aws-vpc/commit/7cadb33e6bc501a881330ed2e3169a3030983ba8))
+
 ## [0.1.7](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.6...v0.1.7) (2024-03-22)
 
 
