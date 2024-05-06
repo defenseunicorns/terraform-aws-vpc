@@ -50,6 +50,8 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 | <a name="input_database_subnets"></a> [database\_subnets](#input\_database\_subnets) | List of database subnets inside the VPC | `list(string)` | `[]` | no |
 | <a name="input_enable_fips_vpce"></a> [enable\_fips\_vpce](#input\_enable\_fips\_vpce) | Enable FIPS endpoints for VPC endpoints. | `bool` | `false` | no |
 | <a name="input_enable_nat_gateway"></a> [enable\_nat\_gateway](#input\_enable\_nat\_gateway) | Enable NAT gateway | `bool` | `false` | no |
+| <a name="input_flow_log_cloudwatch_log_group_retention_in_days"></a> [flow\_log\_cloudwatch\_log\_group\_retention\_in\_days](#input\_flow\_log\_cloudwatch\_log\_group\_retention\_in\_days) | Specifies the number of days you want to retain log events in the specified log group for VPC flow logs | `number` | `365` | no |
+| <a name="input_flow_log_log_format"></a> [flow\_log\_log\_format](#input\_flow\_log\_log\_format) | The fields to include in the flow log record, in the order in which they should appear | `string` | `null` | no |
 | <a name="input_instance_tenancy"></a> [instance\_tenancy](#input\_instance\_tenancy) | Tenancy of instances launched into the VPC.<br>Valid values are "default" or "dedicated".<br>EKS does not support dedicated tenancy. | `string` | `"default"` | no |
 | <a name="input_intra_subnet_tags"></a> [intra\_subnet\_tags](#input\_intra\_subnet\_tags) | Tags to apply to intra subnets | `map(string)` | `{}` | no |
 | <a name="input_intra_subnets"></a> [intra\_subnets](#input\_intra\_subnets) | List of intra subnets inside the VPC | `list(string)` | `[]` | no |

@@ -103,11 +103,13 @@ module "vpc" {
   single_nat_gateway = var.single_nat_gateway
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
-  enable_flow_log                      = true
-  vpc_flow_log_permissions_boundary    = var.vpc_flow_log_permissions_boundary
-  create_flow_log_cloudwatch_log_group = true
-  create_flow_log_cloudwatch_iam_role  = true
-  flow_log_max_aggregation_interval    = 60
+  enable_flow_log                                 = true
+  flow_log_cloudwatch_log_group_retention_in_days = var.flow_log_cloudwatch_log_group_retention_in_days
+  flow_log_log_format                             = var.flow_log_log_format
+  vpc_flow_log_permissions_boundary               = var.vpc_flow_log_permissions_boundary
+  create_flow_log_cloudwatch_log_group            = true
+  create_flow_log_cloudwatch_iam_role             = true
+  flow_log_max_aggregation_interval               = 60
 
   tags = local.tags
 }

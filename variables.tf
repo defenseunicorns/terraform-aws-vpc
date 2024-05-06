@@ -105,6 +105,18 @@ variable "vpc_flow_log_permissions_boundary" {
   default     = null
 }
 
+variable "flow_log_cloudwatch_log_group_retention_in_days" {
+  description = "Specifies the number of days you want to retain log events in the specified log group for VPC flow logs"
+  type        = number
+  default     = 365
+}
+
+variable "flow_log_log_format" {
+  description = "The fields to include in the flow log record, in the order in which they should appear"
+  type        = string
+  default     = null
+}
+
 variable "ip_offsets_per_subnet" {
   description = "List of offsets for IP reservations in each subnet."
   type        = list(list(number))
