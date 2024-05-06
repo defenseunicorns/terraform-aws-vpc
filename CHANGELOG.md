@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.9](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.8...v0.1.9) (2024-05-06)
+
+
+### Features
+
+* add vpc flow log inputs ([4ed20cf](https://github.com/defenseunicorns/terraform-aws-vpc/commit/4ed20cfcf39b5c6781a62b5bd950e3854af5dc0f))
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#123](https://github.com/defenseunicorns/terraform-aws-vpc/issues/123)) ([031b1e6](https://github.com/defenseunicorns/terraform-aws-vpc/commit/031b1e6364c4e1b7953868d05f8bb5eaa1f240a2))
+* **deps:** update all dependencies ([#126](https://github.com/defenseunicorns/terraform-aws-vpc/issues/126)) ([77e7a81](https://github.com/defenseunicorns/terraform-aws-vpc/commit/77e7a819a9f3f72f4f7044cb447cf9b247f28a18))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.327.2 ([#125](https://github.com/defenseunicorns/terraform-aws-vpc/issues/125)) ([c7501b9](https://github.com/defenseunicorns/terraform-aws-vpc/commit/c7501b92251612222011058318ea4dd0a8b0b26c))
+
 ## [0.1.8](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.7...v0.1.8) (2024-04-22)
 
 
