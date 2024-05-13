@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.10](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.9...v0.1.10) (2024-05-13)
+
+
+### Features
+
+* variablize the ecr endpoint policy ([#131](https://github.com/defenseunicorns/terraform-aws-vpc/issues/131)) ([de0b348](https://github.com/defenseunicorns/terraform-aws-vpc/commit/de0b3482e191f89f87d8183705a8b1b5e9df5b8c))
+
+
+### Miscellaneous Chores
+
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.356.1 ([#129](https://github.com/defenseunicorns/terraform-aws-vpc/issues/129)) ([23b4443](https://github.com/defenseunicorns/terraform-aws-vpc/commit/23b44436dc496ea202d450a668fb885a48a76455))
+
 ## [0.1.9](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.8...v0.1.9) (2024-05-06)
 
 
