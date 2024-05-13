@@ -1,56 +1,5 @@
 data "aws_region" "current" {}
 
-data "aws_iam_policy_document" "ecr" {
-  # checkov:skip=CKV_AWS_283: This policy allows EKS to access the regional ecr via a private VPC endpoint.
-  # checkov:skip=CKV_AWS_111: Cannot constrain down resources without knowing specific ECR Repo information.
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "ecr:GetAuthorizationToken",
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:BatchGetImage",
-      "ecr:DescribeImages",
-      "ecr:ListImages",
-      "ecr:PutImage",
-      "ecr:CreateRepository",
-      "ecr:InitiateLayerUpload",
-      "ecr:UploadLayerPart",
-      "ecr:CompleteLayerUpload",
-      "ecr:DeleteRepository",
-      "ecr:TagResource",
-      "ecr:describeRepo",
-      "ecr:DescribeRepositories"
-    ]
-
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
-
-    resources = ["*"]
-  }
-
-  statement {
-    effect    = "Deny"
-    actions   = ["*"]
-    resources = ["*"]
-
-    principals {
-      type        = "*"
-      identifiers = ["*"]
-    }
-
-    condition {
-      test     = "StringNotEquals"
-      variable = "aws:SourceVpc"
-
-      values = [module.vpc.vpc_id]
-    }
-  }
-}
-
 locals {
 
   tags = merge(
@@ -214,7 +163,7 @@ module "vpc_endpoints" {
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
       security_group_ids  = [aws_security_group.vpc_tls[0].id]
-      policy              = data.aws_iam_policy_document.ecr.json
+      policy              = var.ecr_endpoint_policy
     },
     ecr_dkr = {
       service             = "ecr.dkr"
@@ -222,7 +171,7 @@ module "vpc_endpoints" {
       private_dns_enabled = true
       subnet_ids          = module.vpc.private_subnets
       security_group_ids  = [aws_security_group.vpc_tls[0].id]
-      policy              = data.aws_iam_policy_document.ecr.json
+      policy              = var.ecr_endpoint_policy
     },
     kms = {
       service             = "kms"

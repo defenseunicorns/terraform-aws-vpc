@@ -36,7 +36,6 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 | [aws_ec2_subnet_cidr_reservation.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_subnet_cidr_reservation) | resource |
 | [aws_security_group.vpc_smtp](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_security_group.vpc_tls](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
-| [aws_iam_policy_document.ecr](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 | [aws_security_group.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/security_group) | data source |
 
@@ -48,6 +47,7 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 | <a name="input_create_database_subnet_group"></a> [create\_database\_subnet\_group](#input\_create\_database\_subnet\_group) | Create database subnet group | `bool` | `true` | no |
 | <a name="input_create_default_vpc_endpoints"></a> [create\_default\_vpc\_endpoints](#input\_create\_default\_vpc\_endpoints) | Creates a default set of VPC endpoints. | `bool` | `true` | no |
 | <a name="input_database_subnets"></a> [database\_subnets](#input\_database\_subnets) | List of database subnets inside the VPC | `list(string)` | `[]` | no |
+| <a name="input_ecr_endpoint_policy"></a> [ecr\_endpoint\_policy](#input\_ecr\_endpoint\_policy) | Policy to attach to the ECR endpoint. Defaults to *. | `string` | `null` | no |
 | <a name="input_enable_fips_vpce"></a> [enable\_fips\_vpce](#input\_enable\_fips\_vpce) | Enable FIPS endpoints for VPC endpoints. | `bool` | `false` | no |
 | <a name="input_enable_nat_gateway"></a> [enable\_nat\_gateway](#input\_enable\_nat\_gateway) | Enable NAT gateway | `bool` | `false` | no |
 | <a name="input_flow_log_cloudwatch_log_group_retention_in_days"></a> [flow\_log\_cloudwatch\_log\_group\_retention\_in\_days](#input\_flow\_log\_cloudwatch\_log\_group\_retention\_in\_days) | Specifies the number of days you want to retain log events in the specified log group for VPC flow logs | `number` | `365` | no |

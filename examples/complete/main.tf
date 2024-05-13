@@ -9,6 +9,57 @@ data "aws_availability_zones" "available" {
   }
 }
 
+data "aws_iam_policy_document" "ecr" {
+  # checkov:skip=CKV_AWS_283: This policy allows EKS to access the regional ecr via a private VPC endpoint.
+  # checkov:skip=CKV_AWS_111: Cannot constrain down resources without knowing specific ECR Repo information.
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "ecr:GetAuthorizationToken",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:BatchGetImage",
+      "ecr:DescribeImages",
+      "ecr:ListImages",
+      "ecr:PutImage",
+      "ecr:CreateRepository",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload",
+      "ecr:DeleteRepository",
+      "ecr:TagResource",
+      "ecr:describeRepo",
+      "ecr:DescribeRepositories"
+    ]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    resources = ["*"]
+  }
+
+  statement {
+    effect    = "Deny"
+    actions   = ["*"]
+    resources = ["*"]
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    condition {
+      test     = "StringNotEquals"
+      variable = "aws:SourceVpc"
+
+      values = [module.vpc.vpc_id]
+    }
+  }
+}
+
 locals {
   # Add randomness to names to avoid collisions when multiple users are using this example
   vpc_name = "${var.name_prefix}-${lower(random_id.default.hex)}"
@@ -101,6 +152,7 @@ module "vpc" {
   ip_offsets_per_subnet = var.ip_offsets_per_subnet # List of offsets for IP reservations in each subnet.
   single_nat_gateway    = true
   enable_nat_gateway    = true
+  ecr_endpoint_policy   = data.aws_iam_policy_document.ecr.json
   private_subnet_tags = {
     # Needed if you are deploying EKS v1.14 or earlier to this VPC. Not needed for EKS v1.15+.
     "kubernetes.io/cluster/my-cluster" = "owned"
