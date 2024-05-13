@@ -129,6 +129,12 @@ variable "create_default_vpc_endpoints" {
   default     = true
 }
 
+variable "ecr_endpoint_policy" {
+  description = "Policy to attach to the ECR endpoint. Defaults to *."
+  type        = string
+  default     = null
+}
+
 variable "enable_fips_vpce" {
   description = "Enable FIPS endpoints for VPC endpoints."
   type        = bool
