@@ -140,3 +140,8 @@ variable "enable_fips_vpce" {
   type        = bool
   default     = false
 }
+variable "enable_ses_vpce" {
+  description = "Enable Simple Email Service endpoints for the VPC endpoints."
+  type        = bool
+  default     = true
+}

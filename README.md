@@ -50,6 +50,7 @@ To view examples for how you can leverage this VPC Module, please see the [examp
 | <a name="input_ecr_endpoint_policy"></a> [ecr\_endpoint\_policy](#input\_ecr\_endpoint\_policy) | Policy to attach to the ECR endpoint. Defaults to *. | `string` | `null` | no |
 | <a name="input_enable_fips_vpce"></a> [enable\_fips\_vpce](#input\_enable\_fips\_vpce) | Enable FIPS endpoints for VPC endpoints. | `bool` | `false` | no |
 | <a name="input_enable_nat_gateway"></a> [enable\_nat\_gateway](#input\_enable\_nat\_gateway) | Enable NAT gateway | `bool` | `false` | no |
+| <a name="input_enable_ses_vpce"></a> [enable\_ses\_vpce](#input\_enable\_ses\_vpce) | Enable Simple Email Service endpoints for the VPC endpoints. | `bool` | `true` | no |
 | <a name="input_flow_log_cloudwatch_log_group_retention_in_days"></a> [flow\_log\_cloudwatch\_log\_group\_retention\_in\_days](#input\_flow\_log\_cloudwatch\_log\_group\_retention\_in\_days) | Specifies the number of days you want to retain log events in the specified log group for VPC flow logs | `number` | `365` | no |
 | <a name="input_flow_log_log_format"></a> [flow\_log\_log\_format](#input\_flow\_log\_log\_format) | The fields to include in the flow log record, in the order in which they should appear | `string` | `null` | no |
 | <a name="input_instance_tenancy"></a> [instance\_tenancy](#input\_instance\_tenancy) | Tenancy of instances launched into the VPC.<br>Valid values are "default" or "dedicated".<br>EKS does not support dedicated tenancy. | `string` | `"default"` | no |
