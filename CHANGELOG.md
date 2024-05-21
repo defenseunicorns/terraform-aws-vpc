@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.11](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.10...v0.1.11) (2024-05-21)
+
+
+### Bug Fixes
+
+* make ses optional ([#133](https://github.com/defenseunicorns/terraform-aws-vpc/issues/133)) ([2653cd0](https://github.com/defenseunicorns/terraform-aws-vpc/commit/2653cd0dadcb4f081a45a18cc960d44639f79057))
+
 ## [0.1.10](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.9...v0.1.10) (2024-05-13)
 
 
