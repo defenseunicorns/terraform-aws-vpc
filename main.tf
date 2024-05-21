@@ -211,7 +211,7 @@ module "vpc_endpoints" {
         security_group_ids  = [aws_security_group.vpc_tls[0].id]
       }
     },
-    var.enable_ses ? { 
+    var.enable_ses_vpce ? { 
       email_smtp = {
         service             = "email-smtp"
         service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.email-smtp"
