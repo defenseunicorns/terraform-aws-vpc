@@ -211,7 +211,7 @@ module "vpc_endpoints" {
         security_group_ids  = [aws_security_group.vpc_tls[0].id]
       }
     },
-    var.enable_ses_vpce ? { 
+    var.enable_ses_vpce ? {
       email_smtp = {
         service             = "email-smtp"
         service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.email-smtp"
@@ -267,7 +267,7 @@ resource "aws_security_group" "vpc_tls" {
 
 resource "aws_security_group" "vpc_smtp" {
   #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
-  count = var.enable_ses_vpce ? 1 : 0
+  count = var.create_default_vpc_endpoints && var.enable_ses_vpce ? 1 : 0
 
   name        = "${var.name}-vpc_smtp"
   description = "Allow SMTP inbound traffic"
