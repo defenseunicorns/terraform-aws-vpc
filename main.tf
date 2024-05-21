@@ -92,131 +92,135 @@ module "vpc_endpoints" {
   vpc_id             = module.vpc.vpc_id
   security_group_ids = [data.aws_security_group.default.id]
 
-  endpoints = {
-    s3 = {
-      service          = "s3"
-      service_endpoint = "com.amazonaws.${data.aws_region.current.name}.s3"
-      service_type     = "Gateway"
-      tags             = { Name = "s3-vpc-endpoint" }
-      route_table_ids  = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
+  endpoints = merge(
+    {
+      s3 = {
+        service          = "s3"
+        service_endpoint = "com.amazonaws.${data.aws_region.current.name}.s3"
+        service_type     = "Gateway"
+        tags             = { Name = "s3-vpc-endpoint" }
+        route_table_ids  = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
+      },
+      dynamodb = {
+        service            = "dynamodb"
+        service_endpoint   = "com.amazonaws.${data.aws_region.current.name}.dynamodb"
+        service_type       = "Gateway"
+        route_table_ids    = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
+        security_group_ids = [aws_security_group.vpc_tls[0].id]
+        tags               = { Name = "dynamodb-vpc-endpoint" }
+      },
+      ssm = {
+        service             = "ssm"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ssm"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      ssmmessages = {
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ssmmessages"
+        service             = "ssmmessages"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      lambda = {
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.lambda"
+        service             = "lambda"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      sts = {
+        service             = "sts"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.sts"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      logs = {
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.logs"
+        service             = "logs"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      ec2 = {
+        service             = "ec2"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ec2"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      ec2messages = {
+        service             = "ec2messages"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ec2messages"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      ecr_api = {
+        service             = "ecr.api"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ecr.api"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+        policy              = var.ecr_endpoint_policy
+      },
+      ecr_dkr = {
+        service             = "ecr.dkr"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ecr.dkr"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+        policy              = var.ecr_endpoint_policy
+      },
+      kms = {
+        service             = "kms"
+        service_endpoint    = var.enable_fips_vpce ? "com.amazonaws.${data.aws_region.current.name}.kms-fips" : "com.amazonaws.${data.aws_region.current.name}.kms"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      autoscaling = {
+        service             = "autoscaling"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.autoscaling"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      elasticloadbalancing = {
+        service             = "elasticloadbalancing"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.elasticloadbalancing"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      efs = {
+        service             = "elasticfilesystem"
+        service_endpoint    = var.enable_fips_vpce ? "com.amazonaws.${data.aws_region.current.name}.elasticfilesystem-fips" : "com.amazonaws.${data.aws_region.current.name}.elasticfilesystem"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+        route_table_ids     = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
+      },
+      secretsmanager = {
+        service             = "secretsmanager"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.secretsmanager"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      }
     },
-    dynamodb = {
-      service            = "dynamodb"
-      service_endpoint   = "com.amazonaws.${data.aws_region.current.name}.dynamodb"
-      service_type       = "Gateway"
-      route_table_ids    = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
-      security_group_ids = [aws_security_group.vpc_tls[0].id]
-      tags               = { Name = "dynamodb-vpc-endpoint" }
-    },
-    ssm = {
-      service             = "ssm"
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ssm"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    ssmmessages = {
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ssmmessages"
-      service             = "ssmmessages"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    lambda = {
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.lambda"
-      service             = "lambda"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    sts = {
-      service             = "sts"
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.sts"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    logs = {
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.logs"
-      service             = "logs"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    ec2 = {
-      service             = "ec2"
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ec2"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    ec2messages = {
-      service             = "ec2messages"
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ec2messages"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    ecr_api = {
-      service             = "ecr.api"
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ecr.api"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-      policy              = var.ecr_endpoint_policy
-    },
-    ecr_dkr = {
-      service             = "ecr.dkr"
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ecr.dkr"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-      policy              = var.ecr_endpoint_policy
-    },
-    kms = {
-      service             = "kms"
-      service_endpoint    = var.enable_fips_vpce ? "com.amazonaws.${data.aws_region.current.name}.kms-fips" : "com.amazonaws.${data.aws_region.current.name}.kms"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    autoscaling = {
-      service             = "autoscaling"
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.autoscaling"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    elasticloadbalancing = {
-      service             = "elasticloadbalancing"
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.elasticloadbalancing"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    efs = {
-      service             = "elasticfilesystem"
-      service_endpoint    = var.enable_fips_vpce ? "com.amazonaws.${data.aws_region.current.name}.elasticfilesystem-fips" : "com.amazonaws.${data.aws_region.current.name}.elasticfilesystem"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-      route_table_ids     = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
-    },
-    secretsmanager = {
-      service             = "secretsmanager"
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.secretsmanager"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_tls[0].id]
-    },
-    email_smtp = {
-      service             = "email-smtp"
-      service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.email-smtp"
-      private_dns_enabled = true
-      subnet_ids          = module.vpc.private_subnets
-      security_group_ids  = [aws_security_group.vpc_smtp[0].id]
-    }
-  }
+    var.enable_ses ? { 
+      email_smtp = {
+        service             = "email-smtp"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.email-smtp"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_smtp[0].id]
+      }
+    } : {}
+  )
 
   tags = merge(local.tags, {
     Endpoint = "true"
@@ -263,7 +267,7 @@ resource "aws_security_group" "vpc_tls" {
 
 resource "aws_security_group" "vpc_smtp" {
   #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
-  count = var.create_default_vpc_endpoints ? 1 : 0
+  count = var.enable_ses_vpce ? 1 : 0
 
   name        = "${var.name}-vpc_smtp"
   description = "Allow SMTP inbound traffic"
