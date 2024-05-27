@@ -4,7 +4,7 @@ go 1.22.2
 
 require (
 	github.com/defenseunicorns/delivery_aws_iac_utils v0.0.6
-	github.com/gruntwork-io/terratest v0.46.14
+	github.com/gruntwork-io/terratest v0.46.15
 )
 
 require (
