@@ -18,8 +18,9 @@ func TestExamplesCompleteCommon(t *testing.T) {
 
 	tempFolder := teststructure.CopyTerraformFolderToTemp(t, "../..", "examples/complete")
 	terraformOptions := &terraform.Options{
-		TerraformDir: tempFolder,
-		Upgrade:      false,
+		TerraformBinary: "tofu",
+		TerraformDir:    tempFolder,
+		Upgrade:         false,
 		EnvVars: map[string]string{
 			"TF_VAR_region": os.Getenv("TF_VAR_region"), // This will use the existing or newly set default value
 		},
