@@ -1,5 +1,5 @@
 variables:
-  terraform:
+  terraform-vpc:
     name: "my-vpc"  # Example VPC name
     vpc_cidr: "10.200.0.0/16"  # CIDR block for the VPC
     azs:
@@ -18,3 +18,4 @@ variables:
     create_database_subnet_group: true
     enable_fips_vpce: false
     enable_ses_vpce: true
+    backend_config_file: "./backend.tf"

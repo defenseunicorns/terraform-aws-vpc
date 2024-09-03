@@ -1,25 +1,24 @@
-terraform:
-  name: ""  # Name to be used on all resources as identifier
-  tags: {}  # A map of tags to apply to all resources
-  vpc_cidr: ""  # CIDR block for the VPC
-  azs: []  # List of availability zones to deploy into
-  private_subnet_tags: {}  # Tags to apply to private subnets
-  public_subnet_tags: {}  # Tags to apply to public subnets
-  create_database_subnet_group: true  # Create database subnet group
-  instance_tenancy: "dedicated"  # Tenancy of instances launched into the VPC. Valid values are "default" or "dedicated".
-  public_subnets: []  # List of public subnets inside the VPC
-  private_subnets: []  # List of private subnets inside the VPC
-  database_subnets: []  # List of database subnets inside the VPC
-  intra_subnets: []  # List of intra subnets inside the VPC
-  intra_subnet_tags: {}  # Tags to apply to intra subnets
-  enable_nat_gateway: false  # Enable NAT gateway
-  single_nat_gateway: false  # Use a single NAT gateway for all private subnets
-  secondary_cidr_blocks: []  # List of secondary CIDR blocks for the VPC
-  vpc_flow_log_permissions_boundary: null  # The ARN of the Permissions Boundary for the VPC Flow Log IAM Role
-  flow_log_cloudwatch_log_group_retention_in_days: 365  # Specifies the number of days to retain log events in CloudWatch
-  flow_log_log_format: null  # The fields to include in the flow log record
-  ip_offsets_per_subnet: null  # List of offsets for IP reservations in each subnet
-  create_default_vpc_endpoints: true  # Creates a default set of VPC endpoints
-  ecr_endpoint_policy: null  # Policy to attach to the ECR endpoint
-  enable_fips_vpce: false  # Enable FIPS endpoints for VPC endpoints
-  enable_ses_vpce: true  # Enable Simple Email Service endpoints for the VPC endpoints
+name: ""  # Name to be used on all resources as identifier
+tags: {}  # A map of tags to apply to all resources
+vpc_cidr: ""  # CIDR block for the VPC
+azs: []  # List of availability zones to deploy into
+private_subnet_tags: {}  # Tags to apply to private subnets
+public_subnet_tags: {}  # Tags to apply to public subnets
+create_database_subnet_group: true  # Create database subnet group
+instance_tenancy: "dedicated"  # Tenancy of instances launched into the VPC. Valid values are "default" or "dedicated".
+public_subnets: []  # List of public subnets inside the VPC
+private_subnets: []  # List of private subnets inside the VPC
+database_subnets: []  # List of database subnets inside the VPC
+intra_subnets: []  # List of intra subnets inside the VPC
+intra_subnet_tags: {}  # Tags to apply to intra subnets
+enable_nat_gateway: false  # Enable NAT gateway
+single_nat_gateway: false  # Use a single NAT gateway for all private subnets
+secondary_cidr_blocks: []  # List of secondary CIDR blocks for the VPC
+vpc_flow_log_permissions_boundary: null  # The ARN of the Permissions Boundary for the VPC Flow Log IAM Role
+flow_log_cloudwatch_log_group_retention_in_days: 365  # Specifies the number of days to retain log events in CloudWatch
+flow_log_log_format: null  # The fields to include in the flow log record
+ip_offsets_per_subnet: null  # List of offsets for IP reservations in each subnet
+create_default_vpc_endpoints: true  # Creates a default set of VPC endpoints
+ecr_endpoint_policy: null  # Policy to attach to the ECR endpoint
+enable_fips_vpce: false  # Enable FIPS endpoints for VPC endpoints
+enable_ses_vpce: true  # Enable Simple Email Service endpoints for the VPC endpoints
