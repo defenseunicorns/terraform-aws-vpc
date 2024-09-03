@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/defenseunicorns/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: terraform-vpc
+  description: "Zarf package to deploy AWS VPC using OpenTofu, with dynamic variable handling"
+  version: "1.0.0"
+
+variables:
+  - name: BACKEND_CONFIG_FILE
+    description: "Path to the backend-config file"
+
+components:
+  - name: terraform-init-vpc
+    description: "Initialize Terraform VPC module using OpenTofu"
+    actions:
+      onCreate:
+        defaults:
+          maxTotalSeconds: 300
+          maxRetries: 3
+        before:
+          - cmd: "tofu init -backend=false"
+    files:
+      - source: ".terraform"
+        target: ".terraform.zarf.vpc"
+
+  - name: terraform-deploy-vpc
+    description: "Deploy Terraform VPC module using OpenTofu"
+    required: true
+    charts:
+      - name: terraform-vars-chart
+        namespace: default
+        localPath: "./chart"
+        version: "1.0.0"
+        valuesFiles:
+          - chart/values.yaml
+    actions:
+      onDeploy:
+        defaults:
+          maxTotalSeconds: 300
+          maxRetries: 3
+          dir: ".terraform.zarf.vpc"
+        before:
+          - cmd: "tofu init -backend-config=${ZARF_VAR_BACKEND_CONFIG_FILE}"
+          - cmd: "helm template terraform-vars-chart/ -f chart/values.yaml > terraform.tfvars"
+          - cmd: "tofu apply -var-file=terraform.tfvars -auto-approve"

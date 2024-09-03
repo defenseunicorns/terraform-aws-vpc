@@ -1,0 +1,77 @@
+kind: UDSBundle
+metadata:
+  name: opentofu-vpc-deploy
+  description: A UDS bundle for deploying a VPC module using OpenTofu
+  version: 1.0.0
+
+packages:
+  - name: terraform-vpc
+    path: "../"  # Ensure this points to the correct local path to the root directory containing the zarf.yaml
+    ref: "1.0.0"  # Version reference for the Terraform package
+    overrides:
+      terraform-deploy-vpc:
+        terraform-vars-chart:
+          values:
+            - path: terraform.name
+              value: ""  # Set this if needed dynamically at deploy time
+            - path: terraform.tags
+              value: {}
+            - path: terraform.vpc_cidr
+              value: ""  # Example: "10.200.0.0/16"
+            - path: terraform.azs
+              value: []  # Example: ["us-west-1a", "us-west-1b", "us-west-1c"]
+            - path: terraform.private_subnet_tags
+              value: {}
+            - path: terraform.create_database_subnet_group
+              value: true
+            - path: terraform.instance_tenancy
+              value: "dedicated"  # Example: "default" or "dedicated"
+            - path: terraform.public_subnets
+              value: []  # Example: ["subnet-12345", "subnet-67890"]
+            - path: terraform.private_subnets
+              value: []  # Example: ["subnet-23456", "subnet-78901"]
+            - path: terraform.database_subnets
+              value: []
+            - path: terraform.intra_subnets
+              value:
+                - "100.64.0.0/18"
+                - "100.64.64.0/18"
+                - "100.64.128.0/18"
+            - path: terraform.intra_subnet_tags
+              value: {}
+            - path: terraform.enable_nat_gateway
+              value: "false"
+            - path: terraform.single_nat_gateway
+              value: "false"
+            - path: terraform.secondary_cidr_blocks
+              value:
+                - "100.64.0.0/16"
+            - path: terraform.vpc_flow_log_permissions_boundary
+              value: null
+            - path: terraform.flow_log_cloudwatch_log_group_retention_in_days
+              value: 365
+            - path: terraform.flow_log_log_format
+              value: null
+            - path: terraform.ip_offsets_per_subnet
+              value: null
+            - path: terraform.create_default_vpc_endpoints
+              value: true
+            - path: terraform.ecr_endpoint_policy
+              value: null
+            - path: terraform.enable_fips_vpce
+              value: "false"
+            - path: terraform.enable_ses_vpce
+              value: "true"
+          variables:
+            - name: VPC_NAME
+              path: terraform.name
+            - name: ENABLE_FIPS
+              path: terraform.enable_fips_vpce
+            - name: ENABLE_SES_VPCE
+              path: terraform.enable_ses_vpce
+            - name: AZS
+              path: terraform.azs
+            - name: PUBLIC_SUBNETS
+              path: terraform.public_subnets
+            - name: PRIVATE_SUBNETS
+              path: terraform.private_subnets
