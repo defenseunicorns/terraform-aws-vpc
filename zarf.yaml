@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/defenseunicorns/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: terraform-vpc
+  description: "Zarf package to deploy AWS VPC using OpenTofu, with dynamic variable handling"
+  version: "1.0.0"
+
+variables:
+  - name: BACKEND_CONFIG_FILE
+    description: "Path to the backend-config file"
+
+components:
+  - name: terraform-init-vpc
+    description: "Initialize Terraform VPC module using OpenTofu"
+    actions:
+      onCreate:
+        defaults:
+          maxTotalSeconds: 300
+          maxRetries: 3
+        before:
+          - cmd: "ls -al"  # Check current directory contents
+          - cmd: "tofu init -backend=false"
+          - cmd: "ls -al .terraform"  # Ensure .terraform exists before moving
+          - cmd: "ls -al .terraform.zarf.vpc"  # Check the target directory after moving
+    files:
+      - source: ".terraform"
+        target: ".terraform.zarf.vpc"
+
+  - name: terraform-deploy-vpc
+    description: "Deploy Terraform VPC module using OpenTofu"
+    required: true
+    charts:
+      - name: terraform-vars-chart
+        namespace: default
+        localPath: "./chart"
+        version: "1.0.0"
+        valuesFiles:
+          - chart/values.yaml
+    files:
+      - source: "chart/values.yaml"
+        target: ".terraform.zarf.vpc/terraform.tfvars"  # This should copy values.yaml to terraform.tfvars
+    actions:
+      onDeploy:
+        defaults:
+          maxTotalSeconds: 300
+          maxRetries: 3
+          dir: ".terraform.zarf.vpc"
+        before:
+          - cmd: "zarf tools helm repo list"
+          - cmd: "ls -al"  # Check directory contents before running any commands
+          - cmd: "cat .terraform.zarf.vpc/terraform.tfvars"  # Output file content
+          - cmd: "tofu init -backend-config=${ZARF_VAR_BACKEND_CONFIG_FILE}"
+          - cmd: "tofu apply -var-file=terraform.tfvars -auto-approve"

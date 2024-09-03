@@ -1,0 +1,4 @@
+apiVersion: v2
+name: terraform-vars-chart
+description: A Helm chart to manage Terraform variables
+version: 0.1.0
