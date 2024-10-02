@@ -1,3 +1,10 @@
+# Required
+variable "vpc_cidr" {
+  description = "CIDR block for the VPC"
+  type        = string
+}
+
+# Context provider/init offload
 variable "name" {
   description = "Name to be used on all resources as identifier"
   type        = string
@@ -7,11 +14,6 @@ variable "tags" {
   description = "A map of tags to apply to all resources"
   type        = map(string)
   default     = {}
-}
-
-variable "vpc_cidr" {
-  description = "CIDR block for the VPC"
-  type        = string
 }
 
 variable "azs" {
@@ -31,26 +33,6 @@ variable "public_subnet_tags" {
   default     = {}
 }
 
-variable "create_database_subnet_group" {
-  description = "Create database subnet group"
-  type        = bool
-  default     = true
-}
-
-variable "instance_tenancy" {
-  description = <<-EOD
-  Tenancy of instances launched into the VPC.
-  Valid values are "default" or "dedicated".
-  EKS does not support dedicated tenancy.
-  EOD
-  type        = string
-  default     = "default"
-  validation {
-    condition     = contains(["default", "dedicated"], var.instance_tenancy)
-    error_message = "Value must be either default or dedicated."
-  }
-}
-
 variable "public_subnets" {
   description = "List of public subnets inside the VPC"
   type        = list(string)
@@ -61,36 +43,6 @@ variable "private_subnets" {
   description = "List of private subnets inside the VPC"
   type        = list(string)
   default     = []
-}
-
-variable "database_subnets" {
-  description = "List of database subnets inside the VPC"
-  type        = list(string)
-  default     = []
-}
-
-variable "intra_subnets" {
-  description = "List of intra subnets inside the VPC"
-  type        = list(string)
-  default     = []
-}
-
-variable "intra_subnet_tags" {
-  description = "Tags to apply to intra subnets"
-  type        = map(string)
-  default     = {}
-}
-
-variable "enable_nat_gateway" {
-  description = "Enable NAT gateway"
-  type        = bool
-  default     = false
-}
-
-variable "single_nat_gateway" {
-  description = "Use a single NAT gateway for all private subnets"
-  type        = bool
-  default     = true
 }
 
 variable "secondary_cidr_blocks" {
@@ -105,28 +57,10 @@ variable "vpc_flow_log_permissions_boundary" {
   default     = null
 }
 
-variable "flow_log_cloudwatch_log_group_retention_in_days" {
-  description = "Specifies the number of days you want to retain log events in the specified log group for VPC flow logs"
-  type        = number
-  default     = 365
-}
-
-variable "flow_log_log_format" {
-  description = "The fields to include in the flow log record, in the order in which they should appear"
-  type        = string
-  default     = null
-}
-
-variable "ip_offsets_per_subnet" {
-  description = "List of offsets for IP reservations in each subnet."
-  type        = list(list(number))
-  default     = null
-}
-
 variable "create_default_vpc_endpoints" {
   description = "Creates a default set of VPC endpoints."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "ecr_endpoint_policy" {

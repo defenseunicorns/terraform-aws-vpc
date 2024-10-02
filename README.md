@@ -1,6 +1,15 @@
 
 # AWS VPC Module
 
+# Recommended Infrastructure
+
+This module will deploy the VPC for delivery deployments. It assumes our defaule best practices of having private subnets with NAT outbound access, as well as public subnets for a bastion host.
+
+Use in conjuction with the context provider to standardize naming conventions and tagging across resources.
+
+
+# TODO: update this
+
 This repository contains Terraform configuration files that create an AWS Virtual Private Cloud (VPC). This module also sets up subnets for different types of resources, such as public, private and database subnets. Additionally, the module creates and configures a number of other resources, such as default network ACL, default route table, and default security group. It also creates VPC endpoints for services such as S3 and DynamoDB, to allow communication between resources in the VPC and those services without going over the internet.
 
 ## Examples

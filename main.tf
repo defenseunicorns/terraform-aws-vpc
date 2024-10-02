@@ -1,4 +1,19 @@
-data "aws_region" "current" {}
+terraform {
+  required_providers {
+    context = {
+      source  = "registry.terraform.io/cloudposse/context"
+      version = "~> 0.4.0"
+    }
+  }
+}
+data "context_config" "this" {}
+data "context_label" "this" {}
+data "context_tags" "this" {}
+
+
+
+
+data "aws_region" "current" {} # TODO: is this a safe assumption? - offload to context provider/init
 
 locals {
 
@@ -6,7 +21,7 @@ locals {
     var.tags,
     {
       GithubRepo = "terraform-aws-vpc"
-      GithubOrg  = "terraform-aws-modules"
+      GithubOrg  = "defenseunicorns"
   })
 }
 
@@ -16,7 +31,8 @@ locals {
 
 module "vpc" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v5.9.0"
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "v5.13.0"
 
   name                  = var.name
   cidr                  = var.vpc_cidr
@@ -25,15 +41,9 @@ module "vpc" {
   azs              = var.azs
   public_subnets   = var.public_subnets
   private_subnets  = var.private_subnets
-  database_subnets = var.database_subnets
-  intra_subnets    = var.intra_subnets
 
   private_subnet_tags = var.private_subnet_tags
   public_subnet_tags  = var.public_subnet_tags
-  intra_subnet_tags   = var.intra_subnet_tags
-
-  create_database_subnet_group = var.create_database_subnet_group
-  instance_tenancy             = var.instance_tenancy
 
   # Manage so we can name
   manage_default_network_acl = true
@@ -45,44 +55,24 @@ module "vpc" {
   manage_default_security_group = true
   default_security_group_tags   = { Name = "${var.name}-default" }
 
-  enable_dns_hostnames = true
-  enable_dns_support   = true
-
-  enable_nat_gateway = var.enable_nat_gateway
-  single_nat_gateway = var.single_nat_gateway
+  one_nat_gateway_per_az = true
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
   enable_flow_log                                 = true
-  flow_log_cloudwatch_log_group_retention_in_days = var.flow_log_cloudwatch_log_group_retention_in_days
-  flow_log_log_format                             = var.flow_log_log_format
+  flow_log_cloudwatch_log_group_retention_in_days = 365
   vpc_flow_log_permissions_boundary               = var.vpc_flow_log_permissions_boundary
   create_flow_log_cloudwatch_log_group            = true
   create_flow_log_cloudwatch_iam_role             = true
   flow_log_max_aggregation_interval               = 60
 
-  tags = local.tags
-}
-
-locals {
-  reserved_ips_per_subnet = var.ip_offsets_per_subnet != null ? [for idx, cidr in module.vpc.private_subnets_cidr_blocks : [for offset in var.ip_offsets_per_subnet[idx] : cidrhost(cidr, offset)]] : []
-
-  flat_reserved_details = [for idx, ips in local.reserved_ips_per_subnet : { subnet_id = module.vpc.private_subnets[idx], ips = ips }]
-
-  flattened_ips     = flatten([for item in local.flat_reserved_details : item.ips])
-  flattened_subnets = flatten([for item in local.flat_reserved_details : [for ip in item.ips : item.subnet_id]])
-}
-
-resource "aws_ec2_subnet_cidr_reservation" "this" {
-  count            = length(local.flattened_ips)
-  subnet_id        = local.flattened_subnets[count.index]
-  cidr_block       = format("%s/32", local.flattened_ips[count.index])
-  description      = "Reserved IP block for special use"
-  reservation_type = "prefix"
+  tags = local.tags # TODO: context provider
 }
 
 ################################################################################
 # VPC Endpoints Module
 ################################################################################
+
+# Only required for airgap where we control the env
 
 module "vpc_endpoints" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
