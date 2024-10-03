@@ -171,6 +171,6 @@ module "vpc" {
   create_database_subnet_group      = true
   instance_tenancy                  = "default"
   create_default_vpc_endpoints      = true
-  vpc_flow_log_permissions_boundary = var.iam_role_permissions_boundary
+  vpc_flow_log_permissions_boundary = var.permissions_boundary
   tags                              = local.tags
 }

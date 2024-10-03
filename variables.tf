@@ -1,10 +1,10 @@
-# Required
+# Required vars
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   type        = string
 }
 
-# Context provider/init offload
+# To be handled with context
 variable "name" {
   description = "Name to be used on all resources as identifier"
   type        = string
@@ -16,66 +16,36 @@ variable "tags" {
   default     = {}
 }
 
-variable "azs" {
-  description = "List of availability zones to deploy into"
-  type        = list(string)
-}
-
-variable "private_subnet_tags" {
-  description = "Tags to apply to private subnets"
-  type        = map(string)
-  default     = {}
-}
-
 variable "public_subnet_tags" {
   description = "Tags to apply to public subnets"
   type        = map(string)
   default     = {}
 }
 
-variable "public_subnets" {
-  description = "List of public subnets inside the VPC"
-  type        = list(string)
-  default     = []
+# To be handled with IL flag
+variable "instance_tenancy" {
+  description = <<-EOD
+  Tenancy of instances launched into the VPC.
+  Valid values are "default" or "dedicated".
+  EKS does not support dedicated tenancy.
+  EOD
+  type        = string
+  default     = "default"
+  validation {
+    condition     = contains(["default", "dedicated"], var.instance_tenancy)
+    error_message = "Value must be either default or dedicated."
+  }
 }
 
-variable "private_subnets" {
-  description = "List of private subnets inside the VPC"
-  type        = list(string)
-  default     = []
+# Optional
+variable "permissions_boundary" {
+  description = "ARN of a permissions boundary policy to use when creating IAM roles"
+  type        = string
+  default     = null
 }
 
 variable "secondary_cidr_blocks" {
   description = "List of secondary CIDR blocks for the VPC"
   type        = list(string)
   default     = []
-}
-
-variable "vpc_flow_log_permissions_boundary" {
-  description = "The ARN of the Permissions Boundary for the VPC Flow Log IAM Role"
-  type        = string
-  default     = null
-}
-
-variable "create_default_vpc_endpoints" {
-  description = "Creates a default set of VPC endpoints."
-  type        = bool
-  default     = false
-}
-
-variable "ecr_endpoint_policy" {
-  description = "Policy to attach to the ECR endpoint. Defaults to *."
-  type        = string
-  default     = null
-}
-
-variable "enable_fips_vpce" {
-  description = "Enable FIPS endpoints for VPC endpoints."
-  type        = bool
-  default     = false
-}
-variable "enable_ses_vpce" {
-  description = "Enable Simple Email Service endpoints for the VPC endpoints."
-  type        = bool
-  default     = true
 }

@@ -1,50 +1,62 @@
-terraform {
-  required_providers {
-    context = {
-      source  = "registry.terraform.io/cloudposse/context"
-      version = "~> 0.4.0"
-    }
-  }
-}
-data "context_config" "this" {}
-data "context_label" "this" {}
-data "context_tags" "this" {}
-
-
-
-
-data "aws_region" "current" {} # TODO: is this a safe assumption? - offload to context provider/init
-
+provider "aws" {} # TODO: remove
+data "aws_region" "current" {}
 locals {
+  num_azs = 3 # TODO: remove as opt var?
 
-  tags = merge(
+  azs              = [for az_name in slice(data.aws_availability_zones.available.names, 0, min(length(data.aws_availability_zones.available.names), local.num_azs)) : az_name]
+  public_subnets   = [for k, v in module.subnet_addrs.network_cidr_blocks : v if strcontains(k, "public")]
+  private_subnets  = [for k, v in module.subnet_addrs.network_cidr_blocks : v if strcontains(k, "private")]
+  database_subnets = [for k, v in module.subnet_addrs.network_cidr_blocks : v if strcontains(k, "database")]
+
+  tags = merge( # TODO: context
     var.tags,
     {
       GithubRepo = "terraform-aws-vpc"
       GithubOrg  = "defenseunicorns"
   })
 }
+data "aws_availability_zones" "available" {
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
+}
+
 
 ################################################################################
 # VPC Module
 ################################################################################
+module "subnet_addrs" {
+  source = "git::https://github.com/hashicorp/terraform-cidr-subnets?ref=v1.0.0"
+
+  base_cidr_block = var.vpc_cidr
+  networks        = var.vpc_subnets
+}
 
 module "vpc" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
   source  = "terraform-aws-modules/vpc/aws"
-  version = "v5.13.0"
+  version = "5.13.0"
 
   name                  = var.name
   cidr                  = var.vpc_cidr
   secondary_cidr_blocks = var.secondary_cidr_blocks
 
-  azs              = var.azs
-  public_subnets   = var.public_subnets
-  private_subnets  = var.private_subnets
+  azs              = local.azs
+  public_subnets   = local.public_subnets
+  private_subnets  = local.private_subnets
+  database_subnets = local.database_subnets
 
-  private_subnet_tags = var.private_subnet_tags
-  public_subnet_tags  = var.public_subnet_tags
+  private_subnet_tags = { # TODO: merge tags and use context
+    "kubernetes.io/cluster/local.cluster_name" = "shared"
+    "kubernetes.io/role/internal-elb"          = 1
+  }
+  public_subnet_tags = null # TODO: use context
 
+  create_database_subnet_group = true
+  instance_tenancy             = var.instance_tenancy # TODO: based on IL
+
+  # TODO: context
   # Manage so we can name
   manage_default_network_acl = true
   default_network_acl_tags   = { Name = "${var.name}-default" }
@@ -55,28 +67,27 @@ module "vpc" {
   manage_default_security_group = true
   default_security_group_tags   = { Name = "${var.name}-default" }
 
-  one_nat_gateway_per_az = true
+  # TODO: 
+  single_nat_gateway = true #remove if in a private VPC behind TGW
+  enable_nat_gateway = true #remove if in a private VPC behind TGW
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
   enable_flow_log                                 = true
   flow_log_cloudwatch_log_group_retention_in_days = 365
-  vpc_flow_log_permissions_boundary               = var.vpc_flow_log_permissions_boundary
+  vpc_flow_log_permissions_boundary               = var.permissions_boundary
   create_flow_log_cloudwatch_log_group            = true
   create_flow_log_cloudwatch_iam_role             = true
   flow_log_max_aggregation_interval               = 60
 
-  tags = local.tags # TODO: context provider
+  tags = local.tags
 }
 
 ################################################################################
 # VPC Endpoints Module
 ################################################################################
 
-# Only required for airgap where we control the env
-
 module "vpc_endpoints" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
-  count  = var.create_default_vpc_endpoints ? 1 : 0
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.9.0"
 
   vpc_id             = module.vpc.vpc_id
@@ -230,7 +241,6 @@ data "aws_security_group" "default" {
 
 resource "aws_security_group" "vpc_tls" {
   #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
-  count = var.create_default_vpc_endpoints ? 1 : 0
 
   name        = "${var.name}-vpc_tls"
   description = "Allow TLS inbound traffic"
@@ -257,7 +267,6 @@ resource "aws_security_group" "vpc_tls" {
 
 resource "aws_security_group" "vpc_smtp" {
   #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
-  count = var.create_default_vpc_endpoints && var.enable_ses_vpce ? 1 : 0
 
   name        = "${var.name}-vpc_smtp"
   description = "Allow SMTP inbound traffic"
