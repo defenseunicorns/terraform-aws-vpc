@@ -144,7 +144,6 @@ module "vpc" {
   name                  = local.vpc_name
   vpc_cidr              = "10.200.0.0/16"
   secondary_cidr_blocks = ["100.64.0.0/16"] # Used for optimizing IP address usage by pods in an EKS cluster. See https://aws.amazon.com/blogs/containers/optimize-ip-addresses-usage-by-pods-in-your-amazon-eks-cluster/
-  azs                   = local.azs
   public_subnets        = local.public_subnets
   private_subnets       = local.private_subnets
   database_subnets      = local.database_subnets

@@ -1,5 +1,10 @@
 provider "aws" {} # TODO: remove
-data "aws_region" "current" {}
+data "aws_region" "current" {} # TODO: Is this a safe assumption?
+provider "context" {
+  
+}
+
+
 locals {
   num_azs = 3 # TODO: remove as opt var?
 
@@ -15,6 +20,7 @@ locals {
       GithubOrg  = "defenseunicorns"
   })
 }
+
 data "aws_availability_zones" "available" {
   filter {
     name   = "opt-in-status"
@@ -67,7 +73,7 @@ module "vpc" {
   manage_default_security_group = true
   default_security_group_tags   = { Name = "${var.name}-default" }
 
-  # TODO: 
+  # TODO: see if we want one nat per az
   single_nat_gateway = true #remove if in a private VPC behind TGW
   enable_nat_gateway = true #remove if in a private VPC behind TGW
 
