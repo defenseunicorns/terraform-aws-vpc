@@ -1,147 +1,109 @@
-variable "name" {
-  description = "Name to be used on all resources as identifier"
-  type        = string
-}
-
-variable "tags" {
-  description = "A map of tags to apply to all resources"
-  type        = map(string)
-  default     = {}
-}
-
-variable "vpc_cidr" {
-  description = "CIDR block for the VPC"
-  type        = string
-}
-
-variable "azs" {
-  description = "List of availability zones to deploy into"
-  type        = list(string)
-}
-
-variable "private_subnet_tags" {
-  description = "Tags to apply to private subnets"
-  type        = map(string)
-  default     = {}
-}
-
-variable "public_subnet_tags" {
-  description = "Tags to apply to public subnets"
-  type        = map(string)
-  default     = {}
-}
-
-variable "create_database_subnet_group" {
-  description = "Create database subnet group"
-  type        = bool
-  default     = true
-}
-
-variable "instance_tenancy" {
+# Required
+variable "required_vpc_vars" {
   description = <<-EOD
-  Tenancy of instances launched into the VPC.
-  Valid values are "default" or "dedicated".
-  EKS does not support dedicated tenancy.
+  These values are required to be set for the module to function
+  For vpc_subnets, see https://github.com/hashicorp/terraform-cidr-subnets
   EOD
-  type        = string
-  default     = "default"
+  type = object({
+    create_default_vpc_endpoints = bool
+    vpc_cidr                     = string
+    secondary_cidr_blocks        = list(string)
+    vpc_subnets = list(object({
+      name     = string
+      new_bits = number
+      }
+
+    ))
+  })
+}
+
+variable "context_provider_info" {
+  type = object({
+    instance_tenancy    = string
+    name                = string
+    private_subnet_tags = map(string)
+    public_subnet_tags  = map(string)
+    tags                = map(string)
+  })
   validation {
-    condition     = contains(["default", "dedicated"], var.instance_tenancy)
+    condition     = contains(["default", "dedicated"], var.context_provider_info.instance_tenancy)
     error_message = "Value must be either default or dedicated."
   }
 }
 
-variable "public_subnets" {
-  description = "List of public subnets inside the VPC"
-  type        = list(string)
-  default     = []
+# Optional
+
+variable "optional_vpc_vars" {
+  description = "This variable can be set to give flexability on the deployment"
+  type = object({
+    permissions_boundary           = optional(string)
+    vpc_exclude_availability_zones = optional(list(string))
+  })
+  default = {}
+
 }
 
-variable "private_subnets" {
-  description = "List of private subnets inside the VPC"
-  type        = list(string)
-  default     = []
-}
+##############
+# Depreciated#
+##############
+# variable "vpc_cidr" {
+#   description = "CIDR block for the VPC"
+#   type        = string
+# }
 
-variable "database_subnets" {
-  description = "List of database subnets inside the VPC"
-  type        = list(string)
-  default     = []
-}
+# variable "vpc_subnets" {
+#   description = "A list of subnet objects to do subnet math things on - see https://github.com/hashicorp/terraform-cidr-subnets"
+#   type        = list(map(any))
+#   default     = [{}]
+# }
 
-variable "intra_subnets" {
-  description = "List of intra subnets inside the VPC"
-  type        = list(string)
-  default     = []
-}
+# variable "secondary_cidr_blocks" {
+#   description = "List of secondary CIDR blocks for the VPC"
+#   type        = list(string)
+#   default     = []
+# }
 
-variable "intra_subnet_tags" {
-  description = "Tags to apply to intra subnets"
-  type        = map(string)
-  default     = {}
-}
+# variable "name" {
+#   description = "Name to be used on all resources as identifier"
+#   type        = string
+#   default     = "asdf"
+# }
 
-variable "enable_nat_gateway" {
-  description = "Enable NAT gateway"
-  type        = bool
-  default     = false
-}
+# variable "tags" {
+#   description = "A map of tags to apply to all resources"
+#   type        = map(string)
+#   default     = {}
+# }
 
-variable "single_nat_gateway" {
-  description = "Use a single NAT gateway for all private subnets"
-  type        = bool
-  default     = true
-}
+# variable "public_subnet_tags" {
+#   description = "Tags to apply to public subnets"
+#   type        = map(string)
+#   default     = {}
+# }
 
-variable "secondary_cidr_blocks" {
-  description = "List of secondary CIDR blocks for the VPC"
-  type        = list(string)
-  default     = []
-}
+# # TODO: handled with IL flag
+# variable "instance_tenancy" {
+#   description = <<-EOD
+#   Tenancy of instances launched into the VPC.
+#   Valid values are "default" or "dedicated".
+#   EKS does not support dedicated tenancy.
+#   EOD
+#   type        = string
+#   default     = "default"
+#   validation {
+#     condition     = contains(["default", "dedicated"], var.instance_tenancy)
+#     error_message = "Value must be either default or dedicated."
+#   }
+# }
 
-variable "vpc_flow_log_permissions_boundary" {
-  description = "The ARN of the Permissions Boundary for the VPC Flow Log IAM Role"
-  type        = string
-  default     = null
-}
+# variable "permissions_boundary" {
+#   description = "ARN of a permissions boundary policy to use when creating IAM roles"
+#   type        = string
+#   default     = null
+# }
 
-variable "flow_log_cloudwatch_log_group_retention_in_days" {
-  description = "Specifies the number of days you want to retain log events in the specified log group for VPC flow logs"
-  type        = number
-  default     = 365
-}
-
-variable "flow_log_log_format" {
-  description = "The fields to include in the flow log record, in the order in which they should appear"
-  type        = string
-  default     = null
-}
-
-variable "ip_offsets_per_subnet" {
-  description = "List of offsets for IP reservations in each subnet."
-  type        = list(list(number))
-  default     = null
-}
-
-variable "create_default_vpc_endpoints" {
-  description = "Creates a default set of VPC endpoints."
-  type        = bool
-  default     = true
-}
-
-variable "ecr_endpoint_policy" {
-  description = "Policy to attach to the ECR endpoint. Defaults to *."
-  type        = string
-  default     = null
-}
-
-variable "enable_fips_vpce" {
-  description = "Enable FIPS endpoints for VPC endpoints."
-  type        = bool
-  default     = false
-}
-variable "enable_ses_vpce" {
-  description = "Enable Simple Email Service endpoints for the VPC endpoints."
-  type        = bool
-  default     = true
-}
+# variable "vpc_exclude_availability_zones" {
+#   description = "List of availability zones to be excluded for the VPC. This will filter the default ones that are fetched based on the region."
+#   type        = list(string)
+#   default     = []
+# }
