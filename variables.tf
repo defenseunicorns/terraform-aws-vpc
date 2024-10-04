@@ -5,8 +5,9 @@ variable "required_vpc_vars" {
   For vpc_subnets, see https://github.com/hashicorp/terraform-cidr-subnets
   EOD
   type = object({
-    vpc_cidr              = string
-    secondary_cidr_blocks = list(string)
+    create_default_vpc_endpoints = bool
+    vpc_cidr                     = string
+    secondary_cidr_blocks        = list(string)
     vpc_subnets = list(object({
       name     = string
       new_bits = number
@@ -18,11 +19,11 @@ variable "required_vpc_vars" {
 
 variable "context_provider_info" {
   type = object({
-    name                = string
-    tags                = map(string)
-    public_subnet_tags  = map(string)
-    private_subnet_tags = map(string)
     instance_tenancy    = string
+    name                = string
+    private_subnet_tags = map(string)
+    public_subnet_tags  = map(string)
+    tags                = map(string)
   })
   validation {
     condition     = contains(["default", "dedicated"], var.context_provider_info.instance_tenancy)

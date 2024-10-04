@@ -1,3 +1,0 @@
-module "vpc-test" {
-  source = "../."
-}

@@ -92,6 +92,7 @@ module "vpc" {
 
 module "vpc_endpoints" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
+  count  = var.required_vpc_vars.create_default_vpc_endpoints ? 1 : 0
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.9.0"
 
   vpc_id             = module.vpc.vpc_id
