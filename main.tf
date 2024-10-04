@@ -1,4 +1,4 @@
-provider "aws" {} # TODO: remove
+provider "aws" {}              # TODO: remove
 data "aws_region" "current" {} # TODO: Is this a safe assumption? - handled by context?
 
 locals {
@@ -10,7 +10,7 @@ locals {
   database_subnets = [for k, v in module.subnet_addrs.network_cidr_blocks : v if strcontains(k, "database")]
 
   tags = merge( # TODO: context
-    var.tags,
+    var.context_provider_info.tags,
     {
       GithubRepo = "terraform-aws-vpc"
       GithubOrg  = "defenseunicorns"
@@ -22,7 +22,7 @@ data "aws_availability_zones" "available" {
     name   = "opt-in-status"
     values = ["opt-in-not-required"]
   }
-  exclude_names = var.vpc_exclude_availability_zones
+  exclude_names = var.optional_vpc_vars.vpc_exclude_availability_zones
 }
 
 
@@ -33,7 +33,7 @@ module "subnet_addrs" {
   source = "git::https://github.com/hashicorp/terraform-cidr-subnets?ref=v1.0.0"
 
   base_cidr_block = var.required_vpc_vars.vpc_cidr
-  networks        = var.vpc_subnets
+  networks        = var.required_vpc_vars.vpc_subnets
 }
 
 module "vpc" {
@@ -41,9 +41,9 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.13.0"
 
-  name                  = var.name
-  cidr                  = var.vpc_cidr
-  secondary_cidr_blocks = var.secondary_cidr_blocks
+  name                  = var.context_provider_info.name
+  cidr                  = var.required_vpc_vars.vpc_cidr
+  secondary_cidr_blocks = var.required_vpc_vars.secondary_cidr_blocks
 
   azs              = local.azs
   public_subnets   = local.public_subnets
@@ -57,18 +57,18 @@ module "vpc" {
   public_subnet_tags = null # TODO: use context
 
   create_database_subnet_group = true
-  instance_tenancy             = var.instance_tenancy # TODO: based on IL
+  instance_tenancy             = var.context_provider_info.instance_tenancy # TODO: based on IL
 
   # TODO: context
   # Manage so we can name
   manage_default_network_acl = true
-  default_network_acl_tags   = { Name = "${var.name}-default" }
+  default_network_acl_tags   = { Name = "${var.context_provider_info.name}-default" }
 
   manage_default_route_table = true
-  default_route_table_tags   = { Name = "${var.name}-default" }
+  default_route_table_tags   = { Name = "${var.context_provider_info.name}-default" }
 
   manage_default_security_group = true
-  default_security_group_tags   = { Name = "${var.name}-default" }
+  default_security_group_tags   = { Name = "${var.context_provider_info.name}-default" }
 
   # TODO: see if we want one nat per az
   single_nat_gateway = true #remove if in a private VPC behind TGW
@@ -77,7 +77,7 @@ module "vpc" {
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
   enable_flow_log                                 = true
   flow_log_cloudwatch_log_group_retention_in_days = 365
-  vpc_flow_log_permissions_boundary               = var.permissions_boundary
+  vpc_flow_log_permissions_boundary               = var.optional_vpc_vars.permissions_boundary
   create_flow_log_cloudwatch_log_group            = true
   create_flow_log_cloudwatch_iam_role             = true
   flow_log_max_aggregation_interval               = 60
@@ -214,7 +214,7 @@ module "vpc_endpoints" {
 resource "aws_security_group" "vpc_tls" {
   #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
 
-  name        = "${var.name}-vpc_tls"
+  name        = "${var.context_provider_info.name}-vpc_tls"
   description = "Allow TLS inbound traffic"
   vpc_id      = module.vpc.vpc_id
 
@@ -240,7 +240,7 @@ resource "aws_security_group" "vpc_tls" {
 resource "aws_security_group" "vpc_smtp" {
   #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
 
-  name        = "${var.name}-vpc_smtp"
+  name        = "${var.context_provider_info.name}-vpc_smtp"
   description = "Allow SMTP inbound traffic"
   vpc_id      = module.vpc.vpc_id
 
