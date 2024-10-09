@@ -59,22 +59,9 @@ data "aws_iam_policy_document" "ecr" {
   }
 }
 
-
-locals {
-  # Add randomness to names to avoid collisions when multiple users are using this example
-  vpc_name = "${var.name}-${lower(random_id.default.hex)}"
-  tags = merge(
-    var.tags,
-    {
-      RootTFModule = replace(basename(path.cwd), "_", "-") # tag names based on the directory name
-      ManagedBy    = "Terraform"
-      Repo         = "https://github.com/defenseunicorns/terraform-aws-vpc"
-    }
-  )
-}
-
 locals {
   azs              = [for az_name in slice(data.aws_availability_zones.available.names, 0, min(length(data.aws_availability_zones.available.names), 3)) : az_name]
+  vpc_name = "${var.name}-${lower(random_id.default.hex)}"
 
   tags = merge(
     var.tags,
