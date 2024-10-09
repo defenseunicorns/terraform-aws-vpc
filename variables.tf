@@ -18,29 +18,6 @@ variable "vpc_cidr" {
   }  
 }
 
-variable "azs" {
-  description = "List of availability zones to deploy into"
-  type        = list(string)
-}
-
-variable "private_subnet_tags" {
-  description = "Tags to apply to private subnets"
-  type        = map(string)
-  default     = {}
-}
-
-variable "public_subnet_tags" {
-  description = "Tags to apply to public subnets"
-  type        = map(string)
-  default     = {}
-}
-
-variable "create_database_subnet_group" {
-  description = "Create database subnet group"
-  type        = bool
-  default     = true
-}
-
 variable "instance_tenancy" {
   description = <<-EOD
   Tenancy of instances launched into the VPC.
@@ -55,62 +32,8 @@ variable "instance_tenancy" {
   }
 }
 
-variable "public_subnets" {
-  description = "List of public subnets inside the VPC"
-  type        = list(string)
-  default     = []
-}
-
-variable "private_subnets" {
-  description = "List of private subnets inside the VPC"
-  type        = list(string)
-  default     = []
-}
-
-variable "database_subnets" {
-  description = "List of database subnets inside the VPC"
-  type        = list(string)
-  default     = []
-}
-
-variable "intra_subnets" {
-  description = "List of intra subnets inside the VPC"
-  type        = list(string)
-  default     = []
-}
-
-variable "intra_subnet_tags" {
-  description = "Tags to apply to intra subnets"
-  type        = map(string)
-  default     = {}
-}
-
-variable "enable_nat_gateway" {
-  description = "Enable NAT gateway"
-  type        = bool
-  default     = false
-}
-
-variable "single_nat_gateway" {
-  description = "Use a single NAT gateway for all private subnets"
-  type        = bool
-  default     = true
-}
-
-variable "secondary_cidr_blocks" {
-  description = "List of secondary CIDR blocks for the VPC"
-  type        = list(string)
-  default     = []
-}
-
 variable "vpc_flow_log_permissions_boundary" {
   description = "The ARN of the Permissions Boundary for the VPC Flow Log IAM Role"
-  type        = string
-  default     = null
-}
-
-variable "flow_log_log_format" {
-  description = "The fields to include in the flow log record, in the order in which they should appear"
   type        = string
   default     = null
 }
