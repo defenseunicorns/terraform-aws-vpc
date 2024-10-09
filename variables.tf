@@ -12,6 +12,10 @@ variable "tags" {
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   type        = string
+  validation {
+    condition = can(cidrsubnet(var.vpc_cidr, 0, 0)) && tonumber(regex("[0-9]+$", var.vpc_cidr)) <= 24
+    error_message = "The vpc_cidr must be a valid CIDR block with a subnet mask of /24 or larger (e.g., /24, /23, /22)."
+  }  
 }
 
 variable "azs" {
@@ -44,7 +48,7 @@ variable "instance_tenancy" {
   EKS does not support dedicated tenancy.
   EOD
   type        = string
-  default     = "default"
+  default     = "dedicated"
   validation {
     condition     = contains(["default", "dedicated"], var.instance_tenancy)
     error_message = "Value must be either default or dedicated."
@@ -105,28 +109,16 @@ variable "vpc_flow_log_permissions_boundary" {
   default     = null
 }
 
-variable "flow_log_cloudwatch_log_group_retention_in_days" {
-  description = "Specifies the number of days you want to retain log events in the specified log group for VPC flow logs"
-  type        = number
-  default     = 365
-}
-
 variable "flow_log_log_format" {
   description = "The fields to include in the flow log record, in the order in which they should appear"
   type        = string
   default     = null
 }
 
-variable "ip_offsets_per_subnet" {
-  description = "List of offsets for IP reservations in each subnet."
-  type        = list(list(number))
-  default     = null
-}
-
-variable "create_default_vpc_endpoints" {
-  description = "Creates a default set of VPC endpoints."
-  type        = bool
-  default     = true
+variable "ip_reservation_list" {
+  description = "List of IP's to reserve."
+  type        = list(string)
+  default     = []
 }
 
 variable "ecr_endpoint_policy" {
@@ -139,9 +131,4 @@ variable "enable_fips_vpce" {
   description = "Enable FIPS endpoints for VPC endpoints."
   type        = bool
   default     = false
-}
-variable "enable_ses_vpce" {
-  description = "Enable Simple Email Service endpoints for the VPC endpoints."
-  type        = bool
-  default     = true
 }

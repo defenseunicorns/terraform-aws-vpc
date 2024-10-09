@@ -1,6 +1,80 @@
 data "aws_region" "current" {}
 
+
+data "aws_availability_zones" "available" {
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
+}
+
+data "aws_iam_policy_document" "ecr" {
+  # checkov:skip=CKV_AWS_283: This policy allows EKS to access the regional ecr via a private VPC endpoint.
+  # checkov:skip=CKV_AWS_111: Cannot constrain down resources without knowing specific ECR Repo information.
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "ecr:GetAuthorizationToken",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:BatchGetImage",
+      "ecr:DescribeImages",
+      "ecr:ListImages",
+      "ecr:PutImage",
+      "ecr:CreateRepository",
+      "ecr:InitiateLayerUpload",
+      "ecr:UploadLayerPart",
+      "ecr:CompleteLayerUpload",
+      "ecr:DeleteRepository",
+      "ecr:TagResource",
+      "ecr:describeRepo",
+      "ecr:DescribeRepositories"
+    ]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    resources = ["*"]
+  }
+
+  statement {
+    effect    = "Deny"
+    actions   = ["*"]
+    resources = ["*"]
+
+    principals {
+      type        = "*"
+      identifiers = ["*"]
+    }
+
+    condition {
+      test     = "StringNotEquals"
+      variable = "aws:SourceVpc"
+
+      values = [module.vpc.vpc_id]
+    }
+  }
+}
+
+
 locals {
+  # Add randomness to names to avoid collisions when multiple users are using this example
+  vpc_name = "${var.name}-${lower(random_id.default.hex)}"
+  tags = merge(
+    var.tags,
+    {
+      RootTFModule = replace(basename(path.cwd), "_", "-") # tag names based on the directory name
+      ManagedBy    = "Terraform"
+      Repo         = "https://github.com/defenseunicorns/terraform-aws-vpc"
+    }
+  )
+}
+
+locals {
+  azs              = [for az_name in slice(data.aws_availability_zones.available.names, 0, min(length(data.aws_availability_zones.available.names), 3)) : az_name]
 
   tags = merge(
     var.tags,
@@ -8,6 +82,29 @@ locals {
       GithubRepo = "terraform-aws-vpc"
       GithubOrg  = "terraform-aws-modules"
   })
+}
+
+locals {
+  # Determine the subnet mask size for 3 equal largest available subnets.
+  # Example: If VPC is /22, 3 x /24 subnets can be derived.
+  private_subnets = [
+    cidrsubnet(var.vpc_cidr, 2, 0),
+    cidrsubnet(var.vpc_cidr, 2, 1),
+    cidrsubnet(var.vpc_cidr, 2, 2),
+  ]
+
+  intra_subnets = [
+    cidrsubnet(module.vpc.secondary_cidr_blocks[0], 2, 0),
+    cidrsubnet(module.vpc.secondary_cidr_blocks[0], 2, 1),
+    cidrsubnet(module.vpc.secondary_cidr_blocks[0], 2, 2),
+  ]
+
+  # Directly specify the last three /28 subnets based on the VPC CIDR range
+  database_subnets = [
+    cidrsubnet(var.vpc_cidr, 4, 13), # .208/28
+    cidrsubnet(var.vpc_cidr, 4, 14), # .224/28
+    cidrsubnet(var.vpc_cidr, 4, 15), # .240/28
+  ]
 }
 
 ################################################################################
@@ -20,20 +117,27 @@ module "vpc" {
 
   name                  = var.name
   cidr                  = var.vpc_cidr
-  secondary_cidr_blocks = var.secondary_cidr_blocks
+  secondary_cidr_blocks = ["100.64.0.0/16"] # Used for optimizing IP address usage by pods in an EKS cluster. See https://aws.amazon.com/blogs/containers/optimize-ip-addresses-usage-by-pods-in-your-amazon-eks-cluster/
 
-  azs              = var.azs
-  public_subnets   = var.public_subnets
-  private_subnets  = var.private_subnets
-  database_subnets = var.database_subnets
-  intra_subnets    = var.intra_subnets
+  azs              = local.azs
+  private_subnets  = local.private_subnets
+  intra_subnets    = local.intra_subnets
+  # database_subnets = local.database_subnets # we should account for these from an IP space perspective but have them created by the database module
 
-  private_subnet_tags = var.private_subnet_tags
-  public_subnet_tags  = var.public_subnet_tags
-  intra_subnet_tags   = var.intra_subnet_tags
+  private_subnet_tags = {
+    "kubernetes.io/role/internal-elb" = 1
+  }
+  
+  intra_subnet_tags = {
+    "kubernetes.io/role/internal-elb" = "1"
+    "eks.amazonaws.com/component"     = "pod-subnet"
+    "eks.amazonaws.com/pod-network"   = "non-routable"
+    "NetworkPurpose"  = "EKS Pods"
+    "RouteTable"      = "None"
+  }
 
-  create_database_subnet_group = var.create_database_subnet_group
-  instance_tenancy             = var.instance_tenancy
+  create_database_subnet_group = false
+  instance_tenancy             = var.instance_tenancy #leaving exposed as a variable to reduce costs (x3 $$) associated with dedicated tenancy where not needed
 
   # Manage so we can name
   manage_default_network_acl = true
@@ -48,13 +152,13 @@ module "vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
-  enable_nat_gateway = var.enable_nat_gateway
-  single_nat_gateway = var.single_nat_gateway
+  enable_nat_gateway = false
+  single_nat_gateway = false
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
   enable_flow_log                                 = true
-  flow_log_cloudwatch_log_group_retention_in_days = var.flow_log_cloudwatch_log_group_retention_in_days
-  flow_log_log_format                             = var.flow_log_log_format
+  flow_log_cloudwatch_log_group_retention_in_days = 90
+  flow_log_log_format                             = null
   vpc_flow_log_permissions_boundary               = var.vpc_flow_log_permissions_boundary
   create_flow_log_cloudwatch_log_group            = true
   create_flow_log_cloudwatch_iam_role             = true
@@ -64,19 +168,44 @@ module "vpc" {
 }
 
 locals {
-  reserved_ips_per_subnet = var.ip_offsets_per_subnet != null ? [for idx, cidr in module.vpc.private_subnets_cidr_blocks : [for offset in var.ip_offsets_per_subnet[idx] : cidrhost(cidr, offset)]] : []
+  ips     = var.ip_reservation_list
+  cidrs   = module.vpc.private_subnets_cidr_blocks
+  subnets = module.vpc.private_subnets
 
-  flat_reserved_details = [for idx, ips in local.reserved_ips_per_subnet : { subnet_id = module.vpc.private_subnets[idx], ips = ips }]
+  # Create a mapping from CIDR blocks to subnet IDs
+  subnet_cidr_map = { for idx, cidr in local.cidrs : cidr => local.subnets[idx] }
 
-  flattened_ips     = flatten([for item in local.flat_reserved_details : item.ips])
-  flattened_subnets = flatten([for item in local.flat_reserved_details : [for ip in item.ips : item.subnet_id]])
+  # Map IP addresses to subnet IDs using cidr_contains
+  ip_to_subnet = [
+    for ip in local.ips : {
+      ip        = ip
+      subnet_id = try(
+        (
+          [for cidr, subnet_id in local.subnet_cidr_map : subnet_id
+            if cidr_contains(cidr, ip)
+          ][0]
+        ),
+        null
+      )
+    }
+    if can(
+      (
+        [for cidr in keys(local.subnet_cidr_map) : cidr
+          if cidr_contains(cidr, ip)
+        ][0]
+      )
+    )
+  ]
 }
 
 resource "aws_ec2_subnet_cidr_reservation" "this" {
-  count            = length(local.flattened_ips)
-  subnet_id        = local.flattened_subnets[count.index]
-  cidr_block       = format("%s/32", local.flattened_ips[count.index])
-  description      = "Reserved IP block for special use"
+  for_each = {
+    for ip_map in local.ip_to_subnet : ip_map.ip => ip_map
+  }
+
+  subnet_id        = each.value.subnet_id
+  cidr_block       = "${each.value.ip}/32"
+  description      = "Reserved IP address for special use"
   reservation_type = "prefix"
 }
 
@@ -84,9 +213,12 @@ resource "aws_ec2_subnet_cidr_reservation" "this" {
 # VPC Endpoints Module
 ################################################################################
 
+locals {
+  ecr_endpoint_policy = var.ecr_endpoint_policy != null ? var.ecr_endpoint_policy : data.aws_iam_policy_document.ecr.json
+}
+
 module "vpc_endpoints" {
   #checkov:skip=CKV_TF_1: using ref to a specific version
-  count  = var.create_default_vpc_endpoints ? 1 : 0
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//modules/vpc-endpoints?ref=v5.9.0"
 
   vpc_id             = module.vpc.vpc_id
@@ -99,13 +231,13 @@ module "vpc_endpoints" {
         service_endpoint = "com.amazonaws.${data.aws_region.current.name}.s3"
         service_type     = "Gateway"
         tags             = { Name = "s3-vpc-endpoint" }
-        route_table_ids  = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
+        route_table_ids  = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids])
       },
       dynamodb = {
         service            = "dynamodb"
         service_endpoint   = "com.amazonaws.${data.aws_region.current.name}.dynamodb"
         service_type       = "Gateway"
-        route_table_ids    = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
+        route_table_ids    = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids])
         security_group_ids = [aws_security_group.vpc_tls[0].id]
         tags               = { Name = "dynamodb-vpc-endpoint" }
       },
@@ -164,7 +296,7 @@ module "vpc_endpoints" {
         private_dns_enabled = true
         subnet_ids          = module.vpc.private_subnets
         security_group_ids  = [aws_security_group.vpc_tls[0].id]
-        policy              = var.ecr_endpoint_policy
+        policy              = local.ecr_endpoint_policy
       },
       ecr_dkr = {
         service             = "ecr.dkr"
@@ -172,7 +304,7 @@ module "vpc_endpoints" {
         private_dns_enabled = true
         subnet_ids          = module.vpc.private_subnets
         security_group_ids  = [aws_security_group.vpc_tls[0].id]
-        policy              = var.ecr_endpoint_policy
+        policy              = local.ecr_endpoint_policy
       },
       kms = {
         service             = "kms"
@@ -201,7 +333,7 @@ module "vpc_endpoints" {
         private_dns_enabled = true
         subnet_ids          = module.vpc.private_subnets
         security_group_ids  = [aws_security_group.vpc_tls[0].id]
-        route_table_ids     = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids, module.vpc.public_route_table_ids])
+        route_table_ids     = flatten([module.vpc.intra_route_table_ids, module.vpc.private_route_table_ids])
       },
       secretsmanager = {
         service             = "secretsmanager"
@@ -211,7 +343,7 @@ module "vpc_endpoints" {
         security_group_ids  = [aws_security_group.vpc_tls[0].id]
       }
     },
-    var.enable_ses_vpce ? {
+    {
       email_smtp = {
         service             = "email-smtp"
         service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.email-smtp"
@@ -219,7 +351,7 @@ module "vpc_endpoints" {
         subnet_ids          = module.vpc.private_subnets
         security_group_ids  = [aws_security_group.vpc_smtp[0].id]
       }
-    } : {}
+    }
   )
 
   tags = merge(local.tags, {
@@ -240,8 +372,6 @@ data "aws_security_group" "default" {
 
 resource "aws_security_group" "vpc_tls" {
   #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
-  count = var.create_default_vpc_endpoints ? 1 : 0
-
   name        = "${var.name}-vpc_tls"
   description = "Allow TLS inbound traffic"
   vpc_id      = module.vpc.vpc_id
@@ -267,8 +397,6 @@ resource "aws_security_group" "vpc_tls" {
 
 resource "aws_security_group" "vpc_smtp" {
   #checkov:skip=CKV2_AWS_5: Secuirity group is being referenced by the VPC endpoint
-  count = var.create_default_vpc_endpoints && var.enable_ses_vpce ? 1 : 0
-
   name        = "${var.name}-vpc_smtp"
   description = "Allow SMTP inbound traffic"
   vpc_id      = module.vpc.vpc_id

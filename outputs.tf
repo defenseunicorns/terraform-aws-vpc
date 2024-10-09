@@ -604,9 +604,9 @@ output "vpc_endpoints" {
   value       = length(module.vpc_endpoints) > 0 ? module.vpc_endpoints[0].endpoints : null
 }
 
-output "reserved_ips_per_subnet" {
-  value       = var.ip_offsets_per_subnet != null ? { for idx, subnet_id in module.vpc.private_subnets : subnet_id => local.reserved_ips_per_subnet[idx] } : null
-  description = "Map of subnet IDs to their reserved IP addresses in dotted decimal notation."
+output "ip_reservation_list" {
+  value       = var.ip_reservation_list != null ? var.ip_reservation_list : null
+  description = "List of reserved IPs."
 }
 
 ################################################################################
