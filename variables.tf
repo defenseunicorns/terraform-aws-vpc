@@ -18,20 +18,6 @@ variable "vpc_cidr" {
   }  
 }
 
-variable "instance_tenancy" {
-  description = <<-EOD
-  Tenancy of instances launched into the VPC.
-  Valid values are "default" or "dedicated".
-  EKS does not support dedicated tenancy.
-  EOD
-  type        = string
-  default     = "dedicated"
-  validation {
-    condition     = contains(["default", "dedicated"], var.instance_tenancy)
-    error_message = "Value must be either default or dedicated."
-  }
-}
-
 variable "vpc_flow_log_permissions_boundary" {
   description = "The ARN of the Permissions Boundary for the VPC Flow Log IAM Role"
   type        = string

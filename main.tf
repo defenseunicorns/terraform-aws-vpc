@@ -127,7 +127,7 @@ module "vpc" {
   }
 
   create_database_subnet_group = false
-  instance_tenancy             = var.instance_tenancy #leaving exposed as a variable to reduce costs (x3 $$) associated with dedicated tenancy where not needed
+  instance_tenancy             = "default"
 
   # Manage so we can name
   manage_default_network_acl = true
