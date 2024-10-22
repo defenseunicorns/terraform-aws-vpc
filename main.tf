@@ -209,6 +209,13 @@ module "vpc_endpoints" {
         private_dns_enabled = true
         subnet_ids          = module.vpc.private_subnets
         security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      sqs = {
+        service             = "sqs"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.sqs"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
       }
     },
     var.enable_ses_vpce ? {
