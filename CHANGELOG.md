@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.1.12](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.11...v0.1.12) (2024-10-22)
+
+
+### Features
+
+* add sqs service to vpc endpoints ([#150](https://github.com/defenseunicorns/terraform-aws-vpc/issues/150)) ([a609d05](https://github.com/defenseunicorns/terraform-aws-vpc/commit/a609d05ebb8074734bac4c093ee732bdda14eb82))
+
+
+### Miscellaneous Chores
+
+* **deps:** update all dependencies ([#135](https://github.com/defenseunicorns/terraform-aws-vpc/issues/135)) ([92f264c](https://github.com/defenseunicorns/terraform-aws-vpc/commit/92f264cf96c6b0d4709e10f05afdb699bae12c3a))
+* **deps:** update all dependencies ([#137](https://github.com/defenseunicorns/terraform-aws-vpc/issues/137)) ([a8a6f65](https://github.com/defenseunicorns/terraform-aws-vpc/commit/a8a6f65f6a4c3d97fd88968b4aedf3ed026f1c5d))
+* **deps:** update all dependencies ([#138](https://github.com/defenseunicorns/terraform-aws-vpc/issues/138)) ([5c8ada6](https://github.com/defenseunicorns/terraform-aws-vpc/commit/5c8ada6e3a4a060f84cba5bf1e796d4a9c0c5e18))
+* **deps:** update all dependencies ([#140](https://github.com/defenseunicorns/terraform-aws-vpc/issues/140)) ([cc03e95](https://github.com/defenseunicorns/terraform-aws-vpc/commit/cc03e95132d3125482efb62a6ecfb7bd0bd42cfe))
+* **deps:** update all dependencies ([#143](https://github.com/defenseunicorns/terraform-aws-vpc/issues/143)) ([7fd0a0e](https://github.com/defenseunicorns/terraform-aws-vpc/commit/7fd0a0e15e0d681d2b53655cbe2e524a285a63f8))
+* **deps:** update all dependencies ([#144](https://github.com/defenseunicorns/terraform-aws-vpc/issues/144)) ([634e70d](https://github.com/defenseunicorns/terraform-aws-vpc/commit/634e70d239d20ae6962bf2a7f56a90fd9e39db60))
+* **deps:** update all dependencies ([#145](https://github.com/defenseunicorns/terraform-aws-vpc/issues/145)) ([bac4e64](https://github.com/defenseunicorns/terraform-aws-vpc/commit/bac4e644ad71772f041fb14e0d409d6c80f837b3))
+* **deps:** update all dependencies ([#146](https://github.com/defenseunicorns/terraform-aws-vpc/issues/146)) ([885613e](https://github.com/defenseunicorns/terraform-aws-vpc/commit/885613eda325918792e58b5b503a2aaa22142f4e))
+* **deps:** update pre-commit hook renovatebot/pre-commit-hooks to v37.410.1 ([#141](https://github.com/defenseunicorns/terraform-aws-vpc/issues/141)) ([86a3698](https://github.com/defenseunicorns/terraform-aws-vpc/commit/86a36986c9b5fe5a6c58134392e3d9abe8f27016))
+* migrate to tofu ([#139](https://github.com/defenseunicorns/terraform-aws-vpc/issues/139)) ([2687f67](https://github.com/defenseunicorns/terraform-aws-vpc/commit/2687f676ab1dcdfe88be47b6b5f76bf6e5329139))
+
 ## [0.1.11](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.10...v0.1.11) (2024-05-21)
 
 
