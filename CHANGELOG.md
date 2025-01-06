@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.13](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.12...v0.1.13) (2025-01-06)
+
+
+### Miscellaneous Chores
+
+* migrating to remote renovate pattern ([#153](https://github.com/defenseunicorns/terraform-aws-vpc/issues/153)) ([108f505](https://github.com/defenseunicorns/terraform-aws-vpc/commit/108f505eb5a94cf67dd876bfe0e73edaff02b067))
+* remove repo config ([#151](https://github.com/defenseunicorns/terraform-aws-vpc/issues/151)) ([d878c1e](https://github.com/defenseunicorns/terraform-aws-vpc/commit/d878c1e3f21f8ca2a9da89b12903efd4076a9ea8))
+
 ## [0.1.12](https://github.com/defenseunicorns/terraform-aws-vpc/compare/v0.1.11...v0.1.12) (2024-10-22)
 
 
