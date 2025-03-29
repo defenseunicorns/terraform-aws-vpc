@@ -20,13 +20,13 @@ module "vpc" {
 
   name                  = var.name
   cidr                  = var.vpc_cidr
-  secondary_cidr_blocks = var.secondary_cidr_blocks
+  secondary_cidr_blocks = "100.64.0.0/16"
 
   azs              = var.azs
   public_subnets   = var.public_subnets
   private_subnets  = var.private_subnets
   database_subnets = var.database_subnets
-  intra_subnets    = var.intra_subnets
+  intra_subnets    = [for k, v in module.vpc.azs : cidrsubnet(element("100.64.0.0/16", 0), 5, k)]
 
   private_subnet_tags = var.private_subnet_tags
   public_subnet_tags  = var.public_subnet_tags

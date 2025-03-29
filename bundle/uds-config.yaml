@@ -1,0 +1,21 @@
+variables:
+  terraform-vpc:
+    name: "my-vpc"  # Example VPC name
+    vpc_cidr: "10.200.0.0/16"  # CIDR block for the VPC
+    azs:
+      - "us-gov-west-1a"
+      - "us-gov-west-1b"
+      - "us-gov-west-1c"
+    private_subnets:
+      - "10.200.0.0/24"
+      - "10.200.1.0/24"
+      - "10.200.2.0/24"
+    intra_subnets:
+      - "100.64.0.0/18"
+      - "100.64.64.0/18"
+      - "100.64.128.0/18"
+    instance_tenancy: "dedicated"
+    create_database_subnet_group: true
+    enable_fips_vpce: false
+    enable_ses_vpce: true
+    backend_config_file: "./backend.tf"
