@@ -109,6 +109,20 @@ module "vpc_endpoints" {
         security_group_ids = [aws_security_group.vpc_tls[0].id]
         tags               = { Name = "dynamodb-vpc-endpoint" }
       },
+      rds = {
+        service             = "rds"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.rds"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
+      elasticache = {
+        service             = "elasticache"
+        service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.elasticache"
+        private_dns_enabled = true
+        subnet_ids          = module.vpc.private_subnets
+        security_group_ids  = [aws_security_group.vpc_tls[0].id]
+      },
       ssm = {
         service             = "ssm"
         service_endpoint    = "com.amazonaws.${data.aws_region.current.name}.ssm"
